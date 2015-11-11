@@ -16,14 +16,14 @@ export default Ember.Route.extend({
 		/*
 			En estas acciones entra desde el detalle, el detalle al no tener declaradas estas acciones busca en la ruta de los padres
 		*/
-		// updateContact:function(model){
-		// 	model.save();
-		// 	this.transitionTo('contact');
-		// },
-		// deleteContact:function(model){
-		// 	model.deleteRecord();
-		// 	model.save();
-		// 	this.transitionTo('contact');
-		// }
+		updateContact:function(model){
+			model.save();
+			this.transitionTo('contact');
+		},
+		deleteContact:function(model){
+			model.deleteRecord();
+			model.save();
+			this.transitionTo('contact');
+		}
 	}   
 });

@@ -1,9 +1,8 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-	actions: {
-		updateContact:function(model){
-			model.save();
-		}
+	click: function(){
+		var contact = this.get('contact');
+		this.sendAction('actionUp', contact);
 	}
 });

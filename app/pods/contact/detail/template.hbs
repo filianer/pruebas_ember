@@ -1,0 +1,16 @@
+<div class="panel panel-default">
+	<div class="panel-heading">
+		Edit: <strong>{{model.fullName}}</strong>
+	</div>
+  	<div class="panel-body">
+		<div>{{input type="text" value=model.firstName placeholder=(if model.firstName model.firstName "first name")}}</div>
+		<div>{{input type="text" value=model.lastName placeholder=(if model.lastName model.lastName "last name")}}</div>
+		<div>{{input type="number" value=model.age placeholder=(if model.age model.age "age")}}</div>
+		<div class="mar-top">
+			{{!-- <button type ="button" class="btn  btn-danger pull-right mar-left" {{action 'deleteContact' model}}>Delete</button> --}}
+			{{!-- <button type ="button" class="btn  btn-success pull-right" {{action 'updateContact' model}}>Update</button> --}}
+			{{button-delete-contact contact=model class="pull-right mar-left"}}
+			{{button-update-contact contact=model class="pull-right mar-left"}}
+		</div>
+	</div>
+</div>

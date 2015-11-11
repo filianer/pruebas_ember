@@ -3,6 +3,7 @@
 module.exports = function(environment) {
   var ENV = {
     modulePrefix: 'pruebas',
+    podModulePrefix: 'pruebas/pods',
     environment: environment,
     baseURL: '/',
     locationType: 'auto',
@@ -16,6 +17,9 @@ module.exports = function(environment) {
     APP: {
       // Here you can pass flags/options to your application instance
       // when it is created
+    },
+    contentSecurityPolicy: {
+      'connect-src' : "'self' http://a2s.a2system.net:4500"
     }
   };
 

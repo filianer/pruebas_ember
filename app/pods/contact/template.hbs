@@ -1,0 +1,37 @@
+<div class="row">
+	<div class="col-xs-12 col-md-8">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				{{input type="text" value=firstName placeholder="first name"}}
+				{{input type="text" value=lastName placeholder="last name"}}
+				{{input type="number" value=age placeholder="age"}}
+				<button type ="button" class="btn  btn-warning" {{action 'newContact'}}>New</button>
+			</div>
+		  	<div class="panel-body">
+				<table class="table table-striped">
+					{{#each model as |contact|}}
+						{{#if contact.fullName}}
+						<tr>
+							<td>
+								{{#contact-item fullname=contact.fullName id=contact.id contact=contact}}
+								{{/contact-item}}
+								{{!-- {{link-to contact.fullName 'contact.detail' contact.id}} --}}
+								{{!-- <button type ="button" class="btn  btn-danger pull-right mar-left" {{action 'deleteContact' contact}}>Delete</button>
+								<button type ="button" class="btn  btn-success pull-right" {{action 'updateContact' contact}}>Edit</button> --}}
+							</td>
+						</tr>
+						{{/if}}
+					{{else}}
+						<tr>
+							<td>No contacts</td>
+						</tr>
+					{{/each}}
+				</table>
+			</div>
+		</div>
+	</div>
+	<div class="col-xs-12 col-md-4">
+		{{outlet}}
+	</div>
+</div>
+

@@ -25,6 +25,28 @@ export default Ember.Route.extend({
 			model.deleteRecord();
 			model.save();
 			this.transitionTo('contact');
+		},
+		new:function(model){
+			
+			var newC = {};
+			if ( model.get('firstName') ) {
+				newC.firstName = model.get('firstName');
+			}
+			if ( model.get('lastName') ) {
+				newC.lastName = model.get('lastName');
+			}
+			if ( model.get('age') ) {
+				newC.age = model.get('age');
+			}
+
+			console.log("NEW CONTACT: "+JSON.stringify(newC));
+			var contact = this.store.createRecord('contact',newC);
+			contact.save();
+
+			//reseteamos campos
+			model.set('firstName', '');
+			model.set('lastName', '');
+			model.set('age', '');
 		}
 	}
 });

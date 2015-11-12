@@ -30,6 +30,7 @@ export default Ember.Component.extend({
 			self.processedColumns.addObject(c);
 		});
 	},
+
 	actions: {
 		update:function(modelo){
 			console.log("MODELO EN TABLE: "+JSON.stringify(modelo));
@@ -37,10 +38,12 @@ export default Ember.Component.extend({
 		},
 		delete:function(modelo){
 			console.log("MODELO EN TABLE: "+JSON.stringify(modelo));
-			if (confirm(this.get('¿Seguro que deseas borrar?'))) {
+			if (confirm('¿Seguro que deseas borrar?')) {
 		      this.sendAction('actionDel', modelo);
 		    }
-			
+		},
+		new:function(model){
+			this.sendAction('actionNew', model);
 		}
 	}
 });

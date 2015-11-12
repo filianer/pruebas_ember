@@ -2,9 +2,10 @@
 	<div class="panel-heading">
 		{{!-- nueva entrada --}}
 		{{#each processedColumns as |column|}}
-			{{table-property-input column}}
+			{{input type=column.type placeholder=column.title value=column.title}}
+	{{!-- 		{{input type=column.type placeholder=column.title value=modelo.firstName}} --}}
 		{{/each}}
-		<button type ="button" class="btn  btn-warning" {{action 'newContact'}}>New</button>
+		<button type ="button" class="btn  btn-warning" {{action 'new' modelo}}>New</button>
 	</div>
   	<div class="panel-body">
 		<table class="table table-bordered">

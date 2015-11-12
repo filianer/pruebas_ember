@@ -2,8 +2,8 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
 	actions: {
-		update:function(model){
-			model.save();
+		update:function(modelo){
+			this.sendAction('update', modelo);
 		}
 	}
 });

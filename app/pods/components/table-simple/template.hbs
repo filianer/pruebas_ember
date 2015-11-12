@@ -22,17 +22,18 @@
 			</thead>
 
 			<tbody>
-				{{#each modelo as |contact|}}
+				{{#each modelo as |doc|}}
 					<tr>
 						{{!-- recorremos processedColums --}}
 						{{#each processedColumns as |column|}}
 							<td>
-								{{table-property-input column contact}}
+								{{table-property-input column doc}}
 							</td>
 						{{/each}}
 						<td class="text-center">
-							{{button-delete-contact contact=contact class="pull-right mar-left"}}
-							{{button-update modelo=contact class="pull-right"}}
+							{{button-delete modelo=doc class="pull-right mar-left"}}
+							{{button-update modelo=doc class="pull-right"}}
+
 						</td>
 					</tr>
 				{{/each}}

@@ -29,5 +29,18 @@ export default Ember.Component.extend({
 			let c = O.create({'title':name, 'type':type});
 			self.processedColumns.addObject(c);
 		});
+	},
+	actions: {
+		update:function(modelo){
+			console.log("MODELO EN TABLE: "+JSON.stringify(modelo));
+			this.sendAction('actionUp', modelo);
+		},
+		delete:function(modelo){
+			console.log("MODELO EN TABLE: "+JSON.stringify(modelo));
+			if (confirm(this.get('¿Seguro que deseas borrar?'))) {
+		      this.sendAction('actionDel', modelo);
+		    }
+			
+		}
 	}
 });

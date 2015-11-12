@@ -18,7 +18,6 @@ export default Ember.Route.extend({
 			En estas acciones entra desde el detalle, el detalle al no tener declaradas estas acciones busca en la ruta de los padres
 		*/
 		update:function(model){
-			console.log("UPDATE DE RUTA");
 			model.save();
 			this.transitionTo('contact');
 		},

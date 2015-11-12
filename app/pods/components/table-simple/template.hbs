@@ -31,9 +31,8 @@
 							</td>
 						{{/each}}
 						<td class="text-center">
-							{{button-delete modelo=doc class="pull-right mar-left"}}
-							{{button-update modelo=doc class="pull-right"}}
-
+							<button class="btn  btn-danger" onClick={{action 'delete' doc}}>Delete</button>
+							<button class="btn  btn-success" onClick={{action 'update' doc}}>Update</button>
 						</td>
 					</tr>
 				{{/each}}

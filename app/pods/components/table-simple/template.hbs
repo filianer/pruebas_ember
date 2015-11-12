@@ -2,8 +2,7 @@
 	<div class="panel-heading">
 		{{!-- nueva entrada --}}
 		{{#each processedColumns as |column|}}
-			{{input type=column.type placeholder=column.title value=column.title}}
-	{{!-- 		{{input type=column.type placeholder=column.title value=modelo.firstName}} --}}
+			{{input-binder type=column.type placeholder=column.title prop=column.title obj=modelo}}
 		{{/each}}
 		<button type ="button" class="btn  btn-warning" {{action 'new' modelo}}>New</button>
 	</div>

@@ -1,0 +1,44 @@
+<div class="panel panel-default">
+	<div class="panel-heading">
+		{{!-- nueva entrada --}}
+		{{#each processedColumns as |column|}}
+			{{table-property-input column}}
+		{{/each}}
+		<button type ="button" class="btn  btn-warning" {{action 'newContact'}}>New</button>
+	</div>
+  	<div class="panel-body">
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					{{#each processedColumns as |column|}}
+						<th>
+							{{column.title}}
+						</th>
+					{{/each}}
+					<th>
+						Actions
+					</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				{{#each modelo as |contact|}}
+					<tr>
+						{{!-- recorremos processedColums --}}
+						{{#each processedColumns as |column|}}
+							<td>
+								{{table-property-input column contact}}
+							</td>
+						{{/each}}
+						<td class="text-center">
+							{{button-delete-contact contact=contact class="pull-right mar-left"}}
+							{{button-update modelo=contact class="pull-right"}}
+						</td>
+					</tr>
+				{{/each}}
+			</tbody>
+		</table>
+	</div>
+</div>
+
+  

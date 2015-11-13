@@ -3,6 +3,8 @@
 		{{!-- nueva entrada --}}
 		{{#each processedColumns as |column|}}
 			{{input-binder type=column.type placeholder=column.title prop=column.title obj=modelo}}
+			{{!-- {{input type=column.type placeholder=column.title value=modelo.firstName}} --}}
+			{{!-- {{input type=column.type placeholder=column.title value=(intl-get modelo 'firstName')}} --}}
 		{{/each}}
 		<button type ="button" class="btn  btn-warning" {{action 'new' modelo}}>New</button>
 	</div>
@@ -27,7 +29,13 @@
 						{{!-- recorremos processedColums --}}
 						{{#each processedColumns as |column|}}
 							<td>
-								{{table-property-input column doc}}
+
+								{{!-- {{table-property-input column doc}} --}}
+								{{input type=column.type placeholder="undefined" value=(get doc column.title)}}
+
+								{{!-- del siguiente modo si funciona --}}
+								{{!-- {{input type=column.type placeholder="undefined" value=doc.firstName}} --}}
+
 							</td>
 						{{/each}}
 						<td class="text-center">

@@ -26,27 +26,27 @@ export default Ember.Route.extend({
 			model.save();
 			this.transitionTo('contact');
 		},
-		new:function(model){
+		new:function(newObject){
 			
-			var newC = {};
-			if ( model.get('firstName') ) {
-				newC.firstName = model.get('firstName');
-			}
-			if ( model.get('lastName') ) {
-				newC.lastName = model.get('lastName');
-			}
-			if ( model.get('age') ) {
-				newC.age = model.get('age');
-			}
+			// var newC = {};
+			// if ( model.get('firstName') ) {
+			// 	newC.firstName = model.get('firstName');
+			// }
+			// if ( model.get('lastName') ) {
+			// 	newC.lastName = model.get('lastName');
+			// }
+			// if ( model.get('age') ) {
+			// 	newC.age = model.get('age');
+			// }
 
-			console.log("NEW CONTACT: "+JSON.stringify(newC));
-			var contact = this.store.createRecord('contact',newC);
+			console.log("NEW CONTACT: "+JSON.stringify(newObject));
+			var contact = this.store.createRecord('contact',newObject);
 			contact.save();
 
 			//reseteamos campos
-			model.set('firstName', '');
-			model.set('lastName', '');
-			model.set('age', '');
+			// model.set('firstName', '');
+			// model.set('lastName', '');
+			// model.set('age', '');
 		}
 	}
 });

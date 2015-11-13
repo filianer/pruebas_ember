@@ -23,5 +23,27 @@ export default Ember.Controller.extend({
 			this.set('lastName', '');
 			this.set('age', '');
 		}
-	}
+	},
+	properties:[
+		{
+			name:"firstName",
+			title:"First Name",
+			type:"text"
+		},
+		{
+			name:"lastName",
+			title:"Last Name",
+			type:"text"
+		},
+		{
+			name:"age",
+			title:"Age",
+			type:"number"
+		}
+	],
+	firstName: function()
+    {
+        return this.get('firstName');
+    }.property()
+	
 });

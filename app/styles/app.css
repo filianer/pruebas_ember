@@ -50,3 +50,7 @@ input{
     transform: rotate(360deg);
   }
 }
+
+.show_row{
+  display: table-row;
+}

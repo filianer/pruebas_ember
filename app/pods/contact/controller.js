@@ -38,12 +38,9 @@ export default Ember.Controller.extend({
 		{
 			name:"age",
 			title:"Age",
-			type:"number"
+			type:"number",
+			filter:false //para que no filtre por edad (por ejemplo)
 		}
-	],
-	firstName: function()
-    {
-        return this.get('firstName');
-    }.property()
+	]
 	
 });

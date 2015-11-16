@@ -1,5 +1,12 @@
 <div class="panel panel-default">
 	<div class="panel-heading">
+		{{!-- filtro de búsqueda --}}
+		
+		{{#if showGlobalFilter}}
+			{{partial 'components/table-simple/global-filter'}}
+		{{/if}}
+		
+		
 
 		{{#each properties as |prop|}}
 			{{!-- hay que tener cuidado de no permitir la propiedad value en properties --}}
@@ -23,20 +30,12 @@
 			</thead>
 
 			<tbody>
-				{{#each modelo as |doc|}}
-					<tr>
+				{{#each datos as |doc|}}
+					<tr class={{doc.visivility}}>
 						{{!-- recorremos processedColums --}}
 						{{#each properties as |prop|}}
 							<td>
-
-								{{!-- {{table-property-input column doc}} --}}
-								{{!-- {{input type=column.type placeholder="undefined" value=(get doc column.title)}} --}}
-								{{!-- del siguiente modo si funciona --}}
-								{{!-- {{input type=column.type placeholder="undefined" value=doc.firstName}} --}}
-								{{!-- {{input-binder-doc type=column.type placeholder=(get doc column.title) prop=column.title model=doc val=column.title}} --}}
-							{{!-- 	<input type={{prop.type}} placeholder={{prop.title}} {{bind-attr value=(get doc prp.name)}}> --}}
-								{{input type=prop.type placeholder=prop.title value=(table-property-input doc prop.name)}}
-
+								{{input type=prop.type placeholder=prop.title value=(get doc prop.name)}}
 							</td>
 						{{/each}}
 						<td class="text-center">
@@ -47,6 +46,10 @@
 				{{/each}}
 			</tbody>
 		</table>
+		{{!-- paginación --}}
+		{{!-- {{#if showTableFooter}}
+			{{partial tableFooterTemplate}}
+		{{/if}} --}}
 	</div>
 </div>
 

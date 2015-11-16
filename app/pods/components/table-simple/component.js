@@ -21,19 +21,18 @@ export default Ember.Component.extend({
 	showTableFooter: true,
 	// Determina si el filtrado ignora (mayúsculas/minúsculas)
 	filteringIgnoreCase: false,
-	// Tamaño de paginación por defecto
-	pageSize: 10,
+	// Tamaño de paginación por defecto (TODO esto se puede coger de configuración)
+	pageSize: 5, 
 	// Página actual para paginación
   	currentPageNumber: 1,
-
-	dataLength:0,
-
-	pageSizeValues: A([10, 25, 50]),
+  	// Posibles tamaños para paginación (TODO esto se puede coger de configuración)
+	pageSizeValues: A([5, 10, 25, 50]),
 
 	filterString: '',
 	datos: A([]),
-	processedColumns: A([]),
+	//processedColumns: A([]),
 	properties: [],
+	sortProps: [],
 
 	setup: on('init', function() {
 		this._setupColumns();
@@ -54,6 +53,7 @@ export default Ember.Component.extend({
 		this.datos = this.get('modelo');
 	},
 
+	//Observdor para cuando se escribe en el filtro
 	changedFilter: observer('filterString', function(){
 		this.get('filteredContent')
 	}),
@@ -98,16 +98,26 @@ export default Ember.Component.extend({
 		return A(globalSearch);
 	}),
 
-	//Contenido visible según filtrado
-	visibleContent: computed('filteredContent.[]', 'pageSize', 'currentPageNumber', function () {
-		var filteredContent = this.get('filteredContent');
+	sortedContent: Ember.computed.sort('filteredContent.[]', 'sortProps'),
+
+	//Contenido visible según filtrado, este es el contenido que se mostrará en nuestra tabla
+	visibleContent: computed('sortedContent.[]', 'pageSize', 'currentPageNumber', function () {
+		var sortedContent = this.get('sortedContent');
 		var pageSize = this.get('pageSize');
 		var currentPageNumber = this.get('currentPageNumber');
-		const startIndex = pageSize * (currentPageNumber - 1);
-		if (get(filteredContent, 'length') < pageSize) {
-			return filteredContent;
+		
+		//comprobamos si nos quedan datos en la página o nos camibamos de página
+		//por ej si el pageSize=10 y tenemos 11 elementos y estamos en la pag2 y borramos, deberíamos ir a la pag1
+		if ( sortedContent.length <= pageSize ) {
+			currentPageNumber = currentPageNumber == 1 ? 1 : currentPageNumber - 1;
+			set(this, 'currentPageNumber', currentPageNumber);
 		}
-		return A(filteredContent.slice(startIndex, startIndex + pageSize));
+		
+		const startIndex = pageSize * (currentPageNumber - 1);
+		if (get(sortedContent, 'length') < pageSize) {
+			return sortedContent;
+		}
+		return A(sortedContent.slice(startIndex, startIndex + pageSize));
 	}),
 
 	//número de páginas
@@ -118,7 +128,7 @@ export default Ember.Component.extend({
 
 	//botones "Back" y "First" activados
 	gotoBackEnabled: computed.gt('currentPageNumber', 1),
-	//botones "Next" y "Last" activados
+	//botones "Next" y "Last" activados, también vale para saber si es la última página
 	gotoForwardEnabled: computed('currentPageNumber', 'pagesCount', function () {
 		return get(this, 'currentPageNumber') < get(this, 'pagesCount');
 	}),
@@ -209,5 +219,10 @@ export default Ember.Component.extend({
 	      const selectedValue = pageSizeValues[selectedIndex];
 	      set(this, 'pageSize', selectedValue);
 	    },
+
+		sort(direction, key) {
+			console.log("ENTRA EN SORT DIRECTION: "+direction+" key: "+key);
+			this.set('sortProps', [key + ':' + direction]);
+		},
 	}
 });

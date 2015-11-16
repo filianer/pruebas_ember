@@ -224,5 +224,47 @@ export default Ember.Component.extend({
 			console.log("ENTRA EN SORT DIRECTION: "+direction+" key: "+key);
 			this.set('sortProps', [key + ':' + direction]);
 		},
+		gotoFirst () {
+			console.log("GOTOFIRST");
+			if (!get(this, 'gotoBackEnabled')) {
+				return;
+			}
+			set(this, 'currentPageNumber', 1);
+	    },
+
+		gotoPrev () {
+			console.log("GOTOPREV");
+			if (!get(this, 'gotoBackEnabled')) {
+				return;
+			}
+			if (get(this, 'currentPageNumber') > 1) {
+				this.decrementProperty('currentPageNumber');
+			}
+		},
+
+		gotoNext () {
+			console.log("GOTONEXT");
+			if (!get(this, 'gotoForwardEnabled')) {
+				return;
+			}
+			var currentPageNumber = get(this, 'currentPageNumber');
+			var pageSize = get(this, 'pageSize');
+			var arrangedContentLength = get(this, 'filteredContent.length');
+			if (arrangedContentLength > pageSize * (currentPageNumber - 1)) {
+				this.incrementProperty('currentPageNumber');
+			}
+		},
+
+		gotoLast () {
+			console.log("GOTOLAST");
+			if (!get(this, 'gotoForwardEnabled')) {
+				return;
+			}
+			var pageSize = get(this, 'pageSize');
+			var arrangedContentLength = get(this, 'filteredContent.length');
+			var pageNumber = arrangedContentLength / pageSize;
+			pageNumber = (0 === pageNumber % 1) ? pageNumber : (Math.floor(pageNumber) + 1);
+			set(this, 'currentPageNumber', pageNumber);
+		},
 	}
 });

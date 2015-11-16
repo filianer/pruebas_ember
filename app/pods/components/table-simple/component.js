@@ -27,11 +27,13 @@ export default Ember.Component.extend({
   	currentPageNumber: 1,
   	// Posibles tamaños para paginación (TODO esto se puede coger de configuración)
 	pageSizeValues: A([5, 10, 25, 50]),
-
+	// Cadena para filtrar
 	filterString: '',
+	// Array donde se guardarán nuestros objetos
 	datos: A([]),
-	//processedColumns: A([]),
+	// Propiedades de nuestra tabla
 	properties: [],
+	// Propiedades para la ordenación de las filas
 	sortProps: [],
 
 	setup: on('init', function() {
@@ -42,18 +44,18 @@ export default Ember.Component.extend({
 		//con this.get('modelo') tenemos un RecordArray
 		//RecordArray tiene la propiedad type que nos devuelve un DS.Model con el que podemos sacar las propiedades
 		//var modelo = this.get('modelo').type;
-		this.properties = this.get('properties'); //propiedades de las columnas
-		var self = this;
+		//var self = this;
 		// modelo.eachAttribute(function(name, meta) {
 		// 	//según el tipo de dato establecemos type para los input de la tabla
 		// 	var type = (meta.type == 'number') ? 'number':'text';
 		// 	let c = O.create({'title':name, 'type':type});
 		// 	self.processedColumns.addObject(c);
 		// });
+		this.properties = this.get('properties'); //propiedades de las columnas
 		this.datos = this.get('modelo');
 	},
 
-	//Observdor para cuando se escribe en el filtro
+	//Obsevador para cuando se escribe en el filtro
 	changedFilter: observer('filterString', function(){
 		this.get('filteredContent')
 	}),
@@ -98,6 +100,7 @@ export default Ember.Component.extend({
 		return A(globalSearch);
 	}),
 
+	//ordenación de filas
 	sortedContent: Ember.computed.sort('filteredContent.[]', 'sortProps'),
 
 	//Contenido visible según filtrado, este es el contenido que se mostrará en nuestra tabla
@@ -128,13 +131,13 @@ export default Ember.Component.extend({
 
 	//botones "Back" y "First" activados
 	gotoBackEnabled: computed.gt('currentPageNumber', 1),
+
 	//botones "Next" y "Last" activados, también vale para saber si es la última página
 	gotoForwardEnabled: computed('currentPageNumber', 'pagesCount', function () {
 		return get(this, 'currentPageNumber') < get(this, 'pagesCount');
 	}),
-	/*
-		Resumen paginación tabla
-	*/
+
+	// Resumen paginación tabla
 	summary: computed('pageSize', 'currentPageNumber', 'filteredContent', function () {
 		const {
 			currentPageNumber,
@@ -147,6 +150,7 @@ export default Ember.Component.extend({
 		return "Mostrando "+firstIndex+" - "+lastIndex+" de "+length;
 	}),
 
+	//paginación con números
 	visiblePageNumbers: computed('filteredContent', 'pagesCount', 'currentPageNumber', function () {
 		const {
 			pagesCount,
@@ -209,31 +213,34 @@ export default Ember.Component.extend({
 			this.sendAction('actionNew', newObject);
 		},
 	    
-	    gotoCustomPage (pageNumber) { //va a una página específica
+	    //va a una página específica
+	    gotoCustomPage (pageNumber) { 
 	      set(this, 'currentPageNumber', pageNumber);
 	    },
 
-	    changePageSize () { //cambia el tamaño de la paginación
+	    //cambia el tamaño de la paginación
+	    changePageSize () { 
 	      const selectedIndex = this.$('.changePageSize')[0].selectedIndex;
 	      const pageSizeValues = get(this, 'pageSizeValues');
 	      const selectedValue = pageSizeValues[selectedIndex];
 	      set(this, 'pageSize', selectedValue);
 	    },
 
+	    //ordenación de las filas
 		sort(direction, key) {
-			console.log("ENTRA EN SORT DIRECTION: "+direction+" key: "+key);
 			this.set('sortProps', [key + ':' + direction]);
 		},
+
+		//ir a la primera página
 		gotoFirst () {
-			console.log("GOTOFIRST");
 			if (!get(this, 'gotoBackEnabled')) {
 				return;
 			}
 			set(this, 'currentPageNumber', 1);
 	    },
 
+	    //ir a la página anterior
 		gotoPrev () {
-			console.log("GOTOPREV");
 			if (!get(this, 'gotoBackEnabled')) {
 				return;
 			}
@@ -242,8 +249,8 @@ export default Ember.Component.extend({
 			}
 		},
 
+		//ir a la página siguiente
 		gotoNext () {
-			console.log("GOTONEXT");
 			if (!get(this, 'gotoForwardEnabled')) {
 				return;
 			}
@@ -255,8 +262,8 @@ export default Ember.Component.extend({
 			}
 		},
 
+		//ir a la última página
 		gotoLast () {
-			console.log("GOTOLAST");
 			if (!get(this, 'gotoForwardEnabled')) {
 				return;
 			}

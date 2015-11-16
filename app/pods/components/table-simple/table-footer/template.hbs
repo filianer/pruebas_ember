@@ -1,0 +1,38 @@
+<div class="table-footer clearfix">
+  {{! table summary start }}
+  <div class="col-sm-3 table-summary">
+    {{summary}}
+  </div>
+  {{! table summary end }}
+  {{! pagesize selection start }}
+  <div class="col-md-2 col-sm-2">
+    <div class="pull-right">
+
+      <select class="form-control changePageSize" {{action 'changePageSize' on='change'}}>
+        {{#each pageSizeValues key="@index" as |item|}}
+          <option value="{{item}}" selected={{is-equal item selectedValue}}>
+            {{item}}
+          </option>
+        {{/each}}
+      </select>
+
+    </div>
+  </div>
+  {{! pagesize selection end }}
+  {{! pagination start }}
+  <div class="table-nav col-md-7 col-sm-7">
+    <div class="btn-toolbar pull-right" role="toolbar">
+      <div class="btn-group" role="group">
+        {{#each visiblePageNumbers as |page|}}
+          {{#if page.isLink}}
+            <button type="button" class="{{if page.isActive 'active'}} btn btn-default" {{action "gotoCustomPage" page.label}}>{{page.label}}</button>
+          {{else}}
+            <button disabled="disabled" type="button" class="btn btn-default" {{action "gotoCustomPage" page.label}}>{{page.label}}</button>
+          {{/if}}
+        {{/each}}
+      </div>
+    </div>
+  </div>
+  
+  {{! pagination end }}
+</div>

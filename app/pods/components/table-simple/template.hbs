@@ -30,7 +30,7 @@
 			</thead>
 
 			<tbody>
-				{{#each datos as |doc|}}
+				{{#each visibleContent as |doc|}}
 					<tr class={{doc.visivility}}>
 						{{!-- recorremos processedColums --}}
 						{{#each properties as |prop|}}
@@ -47,9 +47,9 @@
 			</tbody>
 		</table>
 		{{!-- paginación --}}
-		{{!-- {{#if showTableFooter}}
-			{{partial tableFooterTemplate}}
-		{{/if}} --}}
+		{{#if showTableFooter}}
+			{{partial 'components/table-simple/table-footer'}}
+		{{/if}}
 	</div>
 </div>
 

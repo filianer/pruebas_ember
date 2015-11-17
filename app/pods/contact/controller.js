@@ -48,6 +48,10 @@ export default Ember.Controller.extend({
 			type:"number",
 			filter:false //para que no filtre por edad (por ejemplo)
 		}
-	]
+	],
+	pagination:{
+		default:5,
+		range:[10,25,50]
+	}
 	
 });

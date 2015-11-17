@@ -22,11 +22,11 @@ export default Ember.Component.extend({
 	// Determina si el filtrado ignora (mayúsculas/minúsculas)
 	filteringIgnoreCase: false,
 	// Tamaño de paginación por defecto (TODO esto se puede coger de configuración)
-	pageSize: 5, 
+	pageSize: 10, 
 	// Página actual para paginación
   	currentPageNumber: 1,
   	// Posibles tamaños para paginación (TODO esto se puede coger de configuración)
-	pageSizeValues: A([5, 10, 25, 50]),
+	pageSizeValues: A([10, 25, 50]),
 	// Cadena para filtrar
 	filterString: '',
 	// Array donde se guardarán nuestros objetos
@@ -40,10 +40,12 @@ export default Ember.Component.extend({
 	actionsColumn: true,
 
 	setup: on('init', function() {
-		this._setupColumns();
+		this._setupConfig();
 	}),
 
-	_setupColumns () {
+	selectedValue: 1,
+
+	_setupConfig () {
 		//con this.get('modelo') tenemos un RecordArray
 		//RecordArray tiene la propiedad type que nos devuelve un DS.Model con el que podemos sacar las propiedades
 		//var modelo = this.get('modelo').type;
@@ -67,6 +69,30 @@ export default Ember.Component.extend({
 			var isVisible = ( typeof(entry['hidden']) === 'undefined' || !entry['hidden'] ) ? true : false;
 			set(entry, 'isVisible', isVisible);
 		});
+
+		//filtro para ignorar mayúsculas
+		if ( this.get('filteringIgnoreCase') ) {
+			set(this, 'filteringIgnoreCase', this.get('filteringIgnoreCase'));
+		}
+
+		//comprobamos paginación
+		if ( this.get('pagination') ) {
+			if ( this.get('pagination.default') ) {
+				set(this,'pageSize', this.get('pagination.default'));
+			}
+			if ( this.get('pagination.range') ) {
+				//hay que tener cuidado de que el range contenga al default, si no lo contiene se lo añadimos
+				var range = this.get('pagination.range');
+				var pSize = this.get('pageSize');
+				if ( range.indexOf(pSize) == -1 ) {
+					range.push(pSize);
+					range.sort(function(a, b){return a-b});
+				}
+				set(this,'pageSizeValues', A(range));
+			}
+			//Establecemos el select con el tamaño de la página actual
+			set(this,'selectedValue',pSize);
+		}
 	},
 
 	//Obsevador para cuando se escribe en el filtro
@@ -89,9 +115,10 @@ export default Ember.Component.extend({
 		// global search, filtra por cualquier campo que tenga declarado filter=true o no tenga filter
 		var globalSearch = data.filter(function (row) {
 			var show = properties.any(c => {
-				//comprobamos si la propiedad es filtrable
+				//comprobamos si la propiedad es filtrable y si está visible
 				var filter = get(c, 'filter');
-				if( filter || typeof(filter) === 'undefined' ) {
+				var isVisible = get(c, 'isVisible');
+				if( (typeof(filter) === 'undefined' || filter) && (typeof(isVisible) === 'undefined' || isVisible) ) {
 					const propertyName = get(c, 'name');
 					if (propertyName) {
 						var cellValue = '' + get(row, propertyName);

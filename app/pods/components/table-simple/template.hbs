@@ -8,8 +8,10 @@
 		
 		{{#if actionNew}}
 			{{#each properties as |prop|}}
-				{{!-- hay que tener cuidado de no permitir la propiedad value en properties --}}
-				{{input type=prop.type placeholder=prop.title value=prop.value}} 
+				{{#if prop.isVisible}}
+					{{!-- hay que tener cuidado de no permitir la propiedad value en properties --}}
+					{{input type=prop.type placeholder=prop.title value=prop.value}} 
+				{{/if}}
 			{{/each}}
 			<button type ="button" class="btn  btn-warning" {{action 'new'}}>New</button>
 		{{/if}}

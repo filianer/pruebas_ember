@@ -36,6 +36,9 @@ export default Ember.Component.extend({
 	// Propiedades para la ordenación de las filas
 	sortProps: [],
 
+	// Booleano que indica si se muestra la columan de acciones
+	actionsColumn: true,
+
 	setup: on('init', function() {
 		this._setupColumns();
 	}),
@@ -53,6 +56,10 @@ export default Ember.Component.extend({
 		// });
 		this.properties = this.get('properties'); //propiedades de las columnas
 		this.datos = this.get('modelo');
+
+		if (!this.get('actionDel') && !this.get('route-edit') ) {
+			set(this, 'actionsColumn', false);
+		}
 	},
 
 	//Obsevador para cuando se escribe en el filtro

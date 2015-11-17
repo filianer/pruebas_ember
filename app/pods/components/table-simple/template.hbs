@@ -1,18 +1,18 @@
 <div class="panel panel-default">
-	<div class="panel-heading">
+	<div class="panel-heading overf-h">
 		{{!-- filtro de búsqueda --}}
 		
 		{{#if showGlobalFilter}}
 			{{partial 'components/table-simple/global-filter'}}
 		{{/if}}
 		
-		
-
-		{{#each properties as |prop|}}
-			{{!-- hay que tener cuidado de no permitir la propiedad value en properties --}}
-			{{input type=prop.type placeholder=prop.title value=prop.value}} 
-		{{/each}}
-		<button type ="button" class="btn  btn-warning" {{action 'new'}}>New</button>
+		{{#if actionNew}}
+			{{#each properties as |prop|}}
+				{{!-- hay que tener cuidado de no permitir la propiedad value en properties --}}
+				{{input type=prop.type placeholder=prop.title value=prop.value}} 
+			{{/each}}
+			<button type ="button" class="btn  btn-warning" {{action 'new'}}>New</button>
+		{{/if}}
 	</div>
   	<div class="panel-body">
 		<table class="table table-bordered">
@@ -25,9 +25,11 @@
           					<span class='glyphicon glyphicon-triangle-bottom' aria-hidden='true' {{action 'sort' 'desc' prop.name}}></span>
 						</th>
 					{{/each}}
-					<th>
-						Actions
-					</th>
+					{{#if actionsColumn}}
+						<th>
+							Actions
+						</th>
+					{{/if}}
 				</tr>
 			</thead>
 
@@ -36,14 +38,24 @@
 					<tr class={{doc.visivility}}>
 						{{!-- recorremos processedColums --}}
 						{{#each properties as |prop|}}
-							<td>
-								{{input type=prop.type placeholder=prop.title value=(get doc prop.name)}}
+							<td class="text-center v-middle">
+								<span>{{get doc prop.name}}</span>
+								{{!-- {{input type=prop.type placeholder=prop.title value=(get doc prop.name)}} --}}
 							</td>
 						{{/each}}
-						<td class="text-center">
-							<button class="btn  btn-danger" onClick={{action 'delete' doc}}>Delete</button>
-							<button class="btn  btn-success" onClick={{action 'update' doc}}>Update</button>
-						</td>
+						{{#if actionsColumn}}
+							<td class="text-center">
+								{{#if actionDel}}
+									<button class="btn  btn-danger" onClick={{action 'delete' doc}}>Delete</button>
+								{{/if}}
+								{{!-- <button class="btn  btn-success" onClick={{action 'update' doc}}>Update</button> --}}
+								{{#if route-edit}}
+									{{#link-to route-edit doc.id}}
+										<button type ="button" class="btn  btn-success" data-toggle="modal" data-target="#modalDetail">Edit</button>
+									{{/link-to}}
+								{{/if}}
+							</td>
+						{{/if}}
 					</tr>
 				{{/each}}
 			</tbody>
@@ -55,4 +67,6 @@
 	</div>
 </div>
 
+{{!-- outlet para mostrar el detalle --}}
+{{outlet}}
   

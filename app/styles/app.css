@@ -50,21 +50,3 @@ input{
     transform: rotate(360deg);
   }
 }
-
-.show_row{
-  display: table-row;
-}
-
-.no-float{
-  float:none !important;
-}
-
-.disabled{
-  color: gray;
-  cursor: default;
-}
-
-.disabled:hover{
-  color: gray;
-  cursor: default;
-}

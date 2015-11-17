@@ -26,6 +26,13 @@ export default Ember.Controller.extend({
 	},
 	properties:[
 		{
+			name:"id",
+			title:"ID",
+			type:"text",
+			show:false,
+			filter:false
+		},
+		{
 			name:"firstName",
 			title:"First Name",
 			type:"text"

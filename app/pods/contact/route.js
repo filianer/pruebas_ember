@@ -1,5 +1,6 @@
 import Ember from 'ember';
 
+
 export default Ember.Route.extend({
 	model: function() {
 		var store = this.store;
@@ -16,14 +17,41 @@ export default Ember.Route.extend({
 		/*
 			En estas acciones entra desde el detalle, el detalle al no tener declaradas estas acciones busca en la ruta de los padres
 		*/
-		// updateContact:function(model){
-		// 	model.save();
-		// 	this.transitionTo('contact');
-		// },
-		// deleteContact:function(model){
-		// 	model.deleteRecord();
-		// 	model.save();
-		// 	this.transitionTo('contact');
-		// }
-	}   
+		update:function(model){
+			model.save();
+			this.transitionTo('contact');
+		},
+		delete:function(model){
+			model.deleteRecord();
+			model.save();
+			this.transitionTo('contact');
+		},
+		new:function(newObject){
+			
+			// var newC = {};
+			// if ( model.get('firstName') ) {
+			// 	newC.firstName = model.get('firstName');
+			// }
+			// if ( model.get('lastName') ) {
+			// 	newC.lastName = model.get('lastName');
+			// }
+			// if ( model.get('age') ) {
+			// 	newC.age = model.get('age');
+			// }
+
+			console.log("NEW CONTACT: "+JSON.stringify(newObject));
+			var contact = this.store.createRecord('contact',newObject);
+			contact.save();
+
+			//reseteamos campos
+			// model.set('firstName', '');
+			// model.set('lastName', '');
+			// model.set('age', '');
+		},
+		transition:function(){
+			this.transitionTo('contact');
+		}
+	}
 });
+
+

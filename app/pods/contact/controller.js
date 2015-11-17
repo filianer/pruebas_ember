@@ -23,5 +23,35 @@ export default Ember.Controller.extend({
 			this.set('lastName', '');
 			this.set('age', '');
 		}
+	},
+	properties:[
+		{
+			name:"id",
+			title:"ID",
+			type:"text",
+			hidden:true,
+			filter:false
+		},
+		{
+			name:"firstName",
+			title:"First Name",
+			type:"text"
+		},
+		{
+			name:"lastName",
+			title:"Last Name",
+			type:"text"
+		},
+		{
+			name:"age",
+			title:"Age",
+			type:"number",
+			filter:false //para que no filtre por edad (por ejemplo)
+		}
+	],
+	pagination:{
+		default:5,
+		range:[10,25,50]
 	}
+	
 });

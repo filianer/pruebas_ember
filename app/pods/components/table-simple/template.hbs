@@ -1,0 +1,78 @@
+<div class="panel panel-default">
+	<div class="panel-heading overf-h">
+		{{!-- filtro de búsqueda --}}
+		
+		{{#if showGlobalFilter}}
+			{{partial 'components/table-simple/global-filter'}}
+		{{/if}}
+		
+		{{#if actionNew}}
+			{{#each properties as |prop|}}
+				{{#if prop.isVisible}}
+					{{!-- hay que tener cuidado de no permitir la propiedad value en properties --}}
+					{{input type=prop.type placeholder=prop.title value=prop.value}} 
+				{{/if}}
+			{{/each}}
+			<button type ="button" class="btn  btn-warning" {{action 'new'}}>New</button>
+		{{/if}}
+	</div>
+  	<div class="panel-body">
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					{{#each properties as |prop|}}
+						{{#if prop.isVisible}}
+							<th>
+								{{prop.title}}
+								<span class='glyphicon glyphicon-triangle-top' aria-hidden='true' {{action 'sort' 'asc' prop.name}}></span>
+	          					<span class='glyphicon glyphicon-triangle-bottom' aria-hidden='true' {{action 'sort' 'desc' prop.name}}></span>
+							</th>
+						{{/if}}
+					{{/each}}
+					{{#if actionsColumn}}
+						<th>
+							Actions
+						</th>
+					{{/if}}
+				</tr>
+			</thead>
+
+			<tbody>
+				{{#each visibleContent as |doc|}}
+					<tr class={{doc.visivility}}>
+						{{!-- recorremos processedColums --}}
+						{{#each properties as |prop|}}
+							{{#if prop.isVisible}}
+								<td class="text-center v-middle">
+									<span>{{get doc prop.name}}</span>
+									{{!-- {{input type=prop.type placeholder=prop.title value=(get doc prop.name)}} --}}
+								</td>
+							{{/if}}
+						{{/each}}
+						{{#if actionsColumn}}
+							<td class="text-center">
+								{{#if actionDel}}
+									<button class="btn  btn-danger" onClick={{action 'delete' doc}}>Delete</button>
+								{{/if}}
+								{{!-- <button class="btn  btn-success" onClick={{action 'update' doc}}>Update</button> --}}
+								{{#if route-edit}}
+									{{#link-to route-edit doc.id}}
+										<button type ="button" class="btn  btn-success" data-toggle="modal" data-target="#modalDetail">Edit</button>
+									{{/link-to}}
+								{{/if}}
+							</td>
+						{{/if}}
+					</tr>
+				{{/each}}
+			</tbody>
+		</table>
+		{{!-- paginación --}}
+		{{#if showTableFooter}}
+			{{partial 'components/table-simple/table-footer'}}
+		{{/if}}
+	</div>
+</div>
+
+{{!-- outlet para mostrar el detalle --}}
+{{outlet}}
+  

@@ -1,0 +1,48 @@
+<div class="table-footer clearfix">
+
+  <div class="col-sm-3 table-summary">
+    {{summary}}
+  </div>
+
+  {{! pagesize selection start }}
+  <div class="col-sm-2">
+    <div class="pull-right">
+
+      <select class="form-control changePageSize" {{action 'changePageSize' on='change'}}>
+        {{#each pageSizeValues key="@index" as |item|}}
+          <option value="{{item}}" selected={{is-equal item selectedValue}}>
+            {{item}}
+          </option>
+        {{/each}}
+      </select>
+
+    </div>
+  </div>
+  {{! pagesize selection end }}
+  {{! pagination start }}
+  <div class="table-nav col-sm-7">
+    <div class="btn-toolbar pull-right" role="toolbar">
+      <a href="#" {{action "gotoFirst"}} class={{if gotoBackEnabled 'enabled' 'disabled'}}><span
+      class="glyphicon glyphicon-chevron-left"></span></a>
+      <a href="#" {{action "gotoPrev"}} class={{if gotoBackEnabled 'enabled' 'disabled'}}><span
+      class="glyphicon glyphicon-menu-left"></span></a>
+
+      <div class="btn-group no-float" role="group">
+        {{#each visiblePageNumbers as |page|}}
+          {{#if page.isLink}}
+            <button type="button" class="{{if page.isActive 'active'}} btn btn-default" {{action "gotoCustomPage" page.label}}>{{page.label}}</button>
+          {{else}}
+            <button disabled="disabled" type="button" class="btn btn-default" {{action "gotoCustomPage" page.label}}>{{page.label}}</button>
+          {{/if}}
+        {{/each}}
+      </div>
+
+      <a href="#" {{action "gotoNext"}} class={{if gotoForwardEnabled 'enabled' 'disabled'}}><span
+      class="glyphicon glyphicon-menu-right"></span></a>
+      <a href="#" {{action "gotoLast"}} class={{if gotoForwardEnabled 'enabled' 'disabled'}}><span
+      class="glyphicon glyphicon-chevron-right"></span></a>
+    </div>
+  </div>
+  
+  {{! pagination end }}
+</div>

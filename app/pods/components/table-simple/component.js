@@ -57,9 +57,16 @@ export default Ember.Component.extend({
 		this.properties = this.get('properties'); //propiedades de las columnas
 		this.datos = this.get('modelo');
 
+		//si no viene la acción de borrado ni route-edit ponemos actionsColumn a false para no pintar la columna de acciones
 		if (!this.get('actionDel') && !this.get('route-edit') ) {
 			set(this, 'actionsColumn', false);
 		}
+
+		//recorremos las propiedades para ponerles el atributo de visible, si no viene o si viene como true serán visibles
+		this.properties.forEach(function(entry){
+			var isVisible = ( typeof(entry['hidden']) === 'undefined' || !entry['hidden'] ) ? true : false;
+			set(entry, 'isVisible', isVisible);
+		});
 	},
 
 	//Obsevador para cuando se escribe en el filtro

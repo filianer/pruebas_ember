@@ -29,7 +29,7 @@ export default Ember.Controller.extend({
 			name:"id",
 			title:"ID",
 			type:"text",
-			show:false,
+			hidden:true,
 			filter:false
 		},
 		{

@@ -47,6 +47,9 @@ export default Ember.Route.extend({
 			// model.set('firstName', '');
 			// model.set('lastName', '');
 			// model.set('age', '');
+		},
+		transition:function(){
+			this.transitionTo('contact');
 		}
 	}
 });

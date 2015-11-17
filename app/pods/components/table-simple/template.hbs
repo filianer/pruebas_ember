@@ -19,11 +19,13 @@
 			<thead>
 				<tr>
 					{{#each properties as |prop|}}
-						<th>
-							{{prop.title}}
-							<span class='glyphicon glyphicon-triangle-top' aria-hidden='true' {{action 'sort' 'asc' prop.name}}></span>
-          					<span class='glyphicon glyphicon-triangle-bottom' aria-hidden='true' {{action 'sort' 'desc' prop.name}}></span>
-						</th>
+						{{#if prop.isVisible}}
+							<th>
+								{{prop.title}}
+								<span class='glyphicon glyphicon-triangle-top' aria-hidden='true' {{action 'sort' 'asc' prop.name}}></span>
+	          					<span class='glyphicon glyphicon-triangle-bottom' aria-hidden='true' {{action 'sort' 'desc' prop.name}}></span>
+							</th>
+						{{/if}}
 					{{/each}}
 					{{#if actionsColumn}}
 						<th>
@@ -38,10 +40,12 @@
 					<tr class={{doc.visivility}}>
 						{{!-- recorremos processedColums --}}
 						{{#each properties as |prop|}}
-							<td class="text-center v-middle">
-								<span>{{get doc prop.name}}</span>
-								{{!-- {{input type=prop.type placeholder=prop.title value=(get doc prop.name)}} --}}
-							</td>
+							{{#if prop.isVisible}}
+								<td class="text-center v-middle">
+									<span>{{get doc prop.name}}</span>
+									{{!-- {{input type=prop.type placeholder=prop.title value=(get doc prop.name)}} --}}
+								</td>
+							{{/if}}
 						{{/each}}
 						{{#if actionsColumn}}
 							<td class="text-center">

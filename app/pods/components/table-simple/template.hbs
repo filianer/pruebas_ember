@@ -53,8 +53,8 @@
 							{{/if}}
 						{{/each}}
 						<td class="text-center">
-							<button type ="button" class="btn  btn-danger w-40" {{action 'cancelNew'}}>Cancel</button>
 							<button type ="button" class="btn  btn-success w-40" {{action 'new'}}>Save</button>
+							<button type ="button" class="btn  btn-danger w-40" {{action 'cancelNew'}}>Cancel</button>
 						</td>
 					</tr>
 				{{/if}}
@@ -71,14 +71,14 @@
 						{{/each}}
 						{{#if actionsColumn}}
 							<td class="text-center">
-								{{#if actionDel}}
-									<button class="btn  btn-danger w-40" onClick={{action 'delete' doc}}>Delete</button>
-								{{/if}}
 								{{!-- <button class="btn  btn-success" onClick={{action 'update' doc}}>Update</button> --}}
 								{{#if route-edit}}
 									{{#link-to route-edit doc.id}}
-										<button type ="button" class="btn  btn-success w-40" data-toggle="modal" data-target="#modalDetail">Edit</button>
+										<button class="btn  btn-success w-30" data-toggle="modal" data-target="#modalDetail"><span class='glyphicon glyphicon-pencil'></span></button>
 									{{/link-to}}
+								{{/if}}
+								{{#if actionDel}}
+									<button class="btn  btn-danger w-30" onClick={{action 'delete' doc}}><span class='glyphicon glyphicon-trash'></span></button>
 								{{/if}}
 							</td>
 						{{/if}}

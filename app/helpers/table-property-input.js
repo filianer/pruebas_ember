@@ -8,14 +8,13 @@ import Ember from 'ember';
 */
 export function tablePropertyInput([doc, prop]) {
 
-	// var result = Ember.String.htmlSafe(`<input type="text">`);
-	// if ( document ) {
-	// 	var val = document.get(column.title) ? document.get(column.title):'';
-	// 	result = Ember.String.htmlSafe(`<input type=${column.type} placeholder="undefined" value=${val}>`);
-	// }
+	var result = Ember.String.htmlSafe(`<input type="text">`);
+	if ( document ) {
+		var val = document.get(column.title) ? document.get(column.title):'';
+		result = Ember.String.htmlSafe(`<input type=${column.type} placeholder="undefined" value=${val}>`);
+	}
 	
-	// return result;
-	return doc[prop];
+	return result;
 }
 
 export default Ember.Helper.helper(tablePropertyInput);

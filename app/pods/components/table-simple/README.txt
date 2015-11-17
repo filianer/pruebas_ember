@@ -57,3 +57,6 @@ TODOS:
 - Template para cada una de las propiedades
 - className para cada una de las propiedades 
 - añadir method-edit para editar inline o con modal
+- pasar ordenamiento por defecto por algún campo
+- filtrar por alguna determinada columna
+- mostrar u ocultar columnas

@@ -332,12 +332,16 @@ export default Ember.Component.extend({
 			set(this, 'currentPageNumber', pageNumber);
 		},
 
-		showCreate(){
+		showCreate(){ //acción disparada cuando se hace click en el botón New Element
+			//resaltamos fila con un color
 			set(this, 'showCreateRow', 'show_row color-new-elem');
+			//deshabilitamos botón NewElement
 			set(this, 'showCreateClass', 'disabled');
+			//ponemos el foco en el primer input de inputNewRow
+			this.$('.inputNewRow')[0].autofocus = true;
 		},
 
-		cancelNew(){
+		cancelNew(){ //acción disparada cuando se hace click en el botón de cancelar nuevo elemento
 			set(this, 'showCreateRow', 'hidden');
 			set(this, 'showCreateClass', 'btn-warning');
 		}

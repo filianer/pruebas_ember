@@ -7,15 +7,17 @@
 		{{/if}}
 		
 		{{#if actionNew}}
-			{{#unless createInline}}
+			{{#if createInline}}
+				<button type="button" class="btn {{showCreateClass}}" {{action 'showCreate'}}>New Element</button>
+			{{else}}
 				{{#each properties as |prop|}}
 					{{#if prop.isVisible}}
 						{{!-- hay que tener cuidado de no permitir la propiedad value en properties --}}
 						{{input type=prop.type placeholder=prop.title value=prop.value}} 
 					{{/if}}
 				{{/each}}
-				<button type ="button" class="btn  btn-warning" {{action 'new'}}>New</button>
-			{{/unless}}
+				<button type="button" class="btn  btn-warning" {{action 'new'}}>New</button>
+			{{/if}}
 		{{/if}}
 	</div>
   	<div class="panel-body">
@@ -42,7 +44,7 @@
 			<tbody>
 				{{!-- row para crear nuevo elemento si pasan createInline --}}
 				{{#if createInline}}
-					<tr>
+					<tr class={{showCreateRow}}>
 						{{#each properties as |prop|}}
 							{{#if prop.isVisible}}
 								<td class="text-center v-middle">
@@ -51,7 +53,8 @@
 							{{/if}}
 						{{/each}}
 						<td class="text-center">
-							<button type ="button" class="btn  btn-warning w-80" {{action 'new'}}>New</button>
+							<button type ="button" class="btn  btn-danger w-40" {{action 'cancelNew'}}>Cancel</button>
+							<button type ="button" class="btn  btn-success w-40" {{action 'new'}}>Save</button>
 						</td>
 					</tr>
 				{{/if}}

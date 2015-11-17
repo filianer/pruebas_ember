@@ -35,7 +35,10 @@ export default Ember.Component.extend({
 	properties: [],
 	// Propiedades para la ordenación de las filas
 	sortProps: [],
-
+	//valor por defecto para mostrar la fila de creación
+	showCreateRow:"hidden",
+	//clase por defecto para el botón de nuevo elemento
+	showCreateClass:"btn-warning",
 	// Booleano que indica si se muestra la columan de acciones
 	actionsColumn: true,
 
@@ -247,11 +250,25 @@ export default Ember.Component.extend({
 		new:function(){
 			//creamos nuevo objeto
 			var newObject = {};
+			var okValue = false;
 			this.properties.forEach(function(entry){
+				if ( entry.value && (entry.value).length > 0){
+					okValue = true;
+				}
 				newObject[entry.name] = entry.value;
+				//reseteamos propiedad
 				Ember.set(entry,'value','');
 			});
-			this.sendAction('actionNew', newObject);
+
+			//comprobamos que el elemento no esté vacío
+			//TODO: se podría mandar un validate para cada propiedad
+			if ( okValue || confirm('Elemento vacío, ¿seguro que deseas guardar?') ) {
+				this.sendAction('actionNew', newObject);
+				if ( this.get('createInline') ) {
+					set(this, 'showCreateRow', 'hidden');
+					set(this, 'showCreateClass', 'btn-warning');
+				}
+			}
 		},
 	    
 	    //va a una página específica
@@ -314,5 +331,15 @@ export default Ember.Component.extend({
 			pageNumber = (0 === pageNumber % 1) ? pageNumber : (Math.floor(pageNumber) + 1);
 			set(this, 'currentPageNumber', pageNumber);
 		},
+
+		showCreate(){
+			set(this, 'showCreateRow', 'show_row color-new-elem');
+			set(this, 'showCreateClass', 'disabled');
+		},
+
+		cancelNew(){
+			set(this, 'showCreateRow', 'hidden');
+			set(this, 'showCreateClass', 'btn-warning');
+		}
 	}
 });

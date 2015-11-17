@@ -64,4 +64,6 @@ TODOS:
 - mostrar u ocultar columnas
 - si añadimos nueva entrada se añade según la ordenación y es posible que no nos demos cuenta de que se ha insertado
 averiguar como solucionar esto, podríamos irnos a la página donde se ha insertado y resaltarlo por ej.
+- Añadir soporte para pasar mensajes para mostrar advertencias según quiera el usuario
+- Añadir validate para cada propiedad
 

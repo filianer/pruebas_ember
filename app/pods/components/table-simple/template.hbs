@@ -7,13 +7,15 @@
 		{{/if}}
 		
 		{{#if actionNew}}
-			{{#each properties as |prop|}}
-				{{#if prop.isVisible}}
-					{{!-- hay que tener cuidado de no permitir la propiedad value en properties --}}
-					{{input type=prop.type placeholder=prop.title value=prop.value}} 
-				{{/if}}
-			{{/each}}
-			<button type ="button" class="btn  btn-warning" {{action 'new'}}>New</button>
+			{{#unless createInline}}
+				{{#each properties as |prop|}}
+					{{#if prop.isVisible}}
+						{{!-- hay que tener cuidado de no permitir la propiedad value en properties --}}
+						{{input type=prop.type placeholder=prop.title value=prop.value}} 
+					{{/if}}
+				{{/each}}
+				<button type ="button" class="btn  btn-warning" {{action 'new'}}>New</button>
+			{{/unless}}
 		{{/if}}
 	</div>
   	<div class="panel-body">
@@ -22,7 +24,7 @@
 				<tr>
 					{{#each properties as |prop|}}
 						{{#if prop.isVisible}}
-							<th>
+							<th class="text-center v-middle">
 								{{prop.title}}
 								<span class='glyphicon glyphicon-triangle-top' aria-hidden='true' {{action 'sort' 'asc' prop.name}}></span>
 	          					<span class='glyphicon glyphicon-triangle-bottom' aria-hidden='true' {{action 'sort' 'desc' prop.name}}></span>
@@ -30,7 +32,7 @@
 						{{/if}}
 					{{/each}}
 					{{#if actionsColumn}}
-						<th>
+						<th class="text-center v-middle">
 							Actions
 						</th>
 					{{/if}}
@@ -38,6 +40,21 @@
 			</thead>
 
 			<tbody>
+				{{!-- row para crear nuevo elemento si pasan createInline --}}
+				{{#if createInline}}
+					<tr>
+						{{#each properties as |prop|}}
+							{{#if prop.isVisible}}
+								<td class="text-center v-middle">
+									{{input type=prop.type placeholder=prop.title value=prop.value}} 
+								</td>
+							{{/if}}
+						{{/each}}
+						<td class="text-center">
+							<button type ="button" class="btn  btn-warning w-80" {{action 'new'}}>New</button>
+						</td>
+					</tr>
+				{{/if}}
 				{{#each visibleContent as |doc|}}
 					<tr class={{doc.visivility}}>
 						{{!-- recorremos processedColums --}}
@@ -52,12 +69,12 @@
 						{{#if actionsColumn}}
 							<td class="text-center">
 								{{#if actionDel}}
-									<button class="btn  btn-danger" onClick={{action 'delete' doc}}>Delete</button>
+									<button class="btn  btn-danger w-40" onClick={{action 'delete' doc}}>Delete</button>
 								{{/if}}
 								{{!-- <button class="btn  btn-success" onClick={{action 'update' doc}}>Update</button> --}}
 								{{#if route-edit}}
 									{{#link-to route-edit doc.id}}
-										<button type ="button" class="btn  btn-success" data-toggle="modal" data-target="#modalDetail">Edit</button>
+										<button type ="button" class="btn  btn-success w-40" data-toggle="modal" data-target="#modalDetail">Edit</button>
 									{{/link-to}}
 								{{/if}}
 							</td>

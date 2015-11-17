@@ -60,7 +60,7 @@ export default Ember.Component.extend({
 		this.datos = this.get('modelo');
 
 		//si no viene la acción de borrado ni route-edit ponemos actionsColumn a false para no pintar la columna de acciones
-		if (!this.get('actionDel') && !this.get('route-edit') ) {
+		if (!this.get('actionDel') && !this.get('route-edit') && !this.get('createInline') ) {
 			set(this, 'actionsColumn', false);
 		}
 

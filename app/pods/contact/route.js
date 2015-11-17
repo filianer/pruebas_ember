@@ -6,9 +6,10 @@ export default Ember.Route.extend({
 		var store = this.store;
 		return new Ember.RSVP.Promise(function(resolve, reject) { //para simular un spinner de carga
 			var result = store.findAll('contact');
-			setTimeout(function() {
-		      resolve(result);
-		    }, 500);
+			resolve(result);
+			// setTimeout(function() { //por si queremos darle más tiempo para ver el spinner
+			//      resolve(result);
+			// }, 500);
 		});
 		
 		//return this.store.findAll('contact');

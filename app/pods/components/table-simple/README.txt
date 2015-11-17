@@ -13,6 +13,8 @@ Llamada:
 	}
 ]
 
+- createInline: booleano, true para crear nuevos elementos en línea dentro de la tabla o false o no se pasa para crearlos fuera 
+
 - pagination:{
 	default: 10, 			//valor predeterminado para paginación, si no se pasa por defecto coge 10
 	range:[5,10,25,50]		//valor del rango para cambiar paginación, si no se pasa por defecto es 10,25,50
@@ -60,3 +62,6 @@ TODOS:
 - pasar ordenamiento por defecto por algún campo
 - filtrar por alguna determinada columna
 - mostrar u ocultar columnas
+- si añadimos nueva entrada se añade según la ordenación y es posible que no nos demos cuenta de que se ha insertado
+averiguar como solucionar esto, podríamos irnos a la página donde se ha insertado y resaltarlo por ej.
+

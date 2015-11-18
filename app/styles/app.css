@@ -50,3 +50,10 @@ input{
     transform: rotate(360deg);
   }
 }
+
+@media screen and (max-width: 780px) {
+    *[class*="table-simple"] .w-30 {
+      width: 100%;
+    }
+}
+

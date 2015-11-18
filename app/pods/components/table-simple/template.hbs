@@ -1,7 +1,6 @@
 <div class="panel panel-default">
 	<div class="panel-heading overf-h">
 		{{!-- filtro de búsqueda --}}
-		
 		{{#if showGlobalFilter}}
 			{{partial 'components/table-simple/global-filter'}}
 		{{/if}}
@@ -65,7 +64,6 @@
 							{{#if prop.isVisible}}
 								<td class="text-center v-middle">
 									<span>{{get doc prop.name}}</span>
-									{{!-- {{input type=prop.type placeholder=prop.title value=(get doc prop.name)}} --}}
 								</td>
 							{{/if}}
 						{{/each}}
@@ -73,8 +71,8 @@
 						{{!-- columna de acciones --}}
 						{{#if actionsColumn}}
 							<td class="text-center">
-								{{!-- <button class="btn  btn-success" onClick={{action 'update' doc}}>Update</button> --}}
 								{{#if route-edit}}
+									{{!-- linkeamos a la ruta del detalle para poder editar --}}
 									{{#link-to route-edit doc.id}}
 										{{#if editInline}}
 											<button class="btn  btn-success w-30" {{action 'editInline' doc}}><span class='glyphicon glyphicon-pencil'></span></button>
@@ -89,11 +87,13 @@
 							</td>
 						{{/if}}
 					</tr>
-					{{!-- outlet por fila para mostrar la edición en linea --}}
-					{{#if doc.visivilityEdit}}
-						<tr class="color-up-elem">
-							{{outlet}}
-						</tr>
+					{{#if editInline}}
+						{{!-- outlet por fila para mostrar la edición en linea --}}
+						{{#if doc.visivilityEdit}}
+							<tr class="color-up-elem">
+								{{outlet}}
+							</tr>
+						{{/if}}
 					{{/if}}
 					
 				{{/each}}
@@ -106,7 +106,7 @@
 	</div>
 </div>
 
-{{!-- outlet para mostrar el modal --}}
+{{!-- outlet para mostrar el modal de edición --}}
 {{#unless editInline}}
 	{{outlet}}
 {{/unless}}

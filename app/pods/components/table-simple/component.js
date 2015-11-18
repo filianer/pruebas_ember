@@ -12,7 +12,6 @@ const {
 
 const O = Ember.Object;
 
-
 export default Ember.Component.extend({
 
 	// Determina si se muestra el filtro de búsqueda
@@ -21,11 +20,11 @@ export default Ember.Component.extend({
 	showTableFooter: true,
 	// Determina si el filtrado ignora (mayúsculas/minúsculas)
 	filteringIgnoreCase: false,
-	// Tamaño de paginación por defecto (TODO esto se puede coger de configuración)
+	// Tamaño de paginación por defecto
 	pageSize: 10, 
 	// Página actual para paginación
   	currentPageNumber: 1,
-  	// Posibles tamaños para paginación (TODO esto se puede coger de configuración)
+  	// Posibles tamaños para paginación
 	pageSizeValues: A([10, 25, 50]),
 	// Cadena para filtrar
 	filterString: '',
@@ -37,19 +36,20 @@ export default Ember.Component.extend({
 	sortProps: [],
 	//variable para almacenar la fila que se está editando
 	rowEditNow: [],
-	//valor por defecto para mostrar la fila de creación
+	//clase por defecto para mostrar la fila de creación
 	showCreateRow:"hidden",
 	//clase por defecto para el botón de nuevo elemento
 	newElementClass:"btn-warning",
 	// Booleano que indica si se muestra la columan de acciones
 	actionsColumn: true,
+	//indice del select de tamaño de paginación seleccionado
+	selectedValue: 1,
 
 	setup: on('init', function() {
 		this._setupConfig();
 	}),
 
-	selectedValue: 1,
-
+	//Establece la configuración inicial
 	_setupConfig () {
 		//con this.get('modelo') tenemos un RecordArray
 		//RecordArray tiene la propiedad type que nos devuelve un DS.Model con el que podemos sacar las propiedades
@@ -80,7 +80,7 @@ export default Ember.Component.extend({
 			set(this, 'filteringIgnoreCase', this.get('filteringIgnoreCase'));
 		}
 
-		//comprobamos paginación
+		//comprobamos si nos pasan paginación
 		if ( this.get('pagination') ) {
 			if ( this.get('pagination.default') ) {
 				set(this,'pageSize', this.get('pagination.default'));
@@ -91,7 +91,7 @@ export default Ember.Component.extend({
 				var pSize = this.get('pageSize');
 				if ( range.indexOf(pSize) == -1 ) {
 					range.push(pSize);
-					range.sort(function(a, b){return a-b});
+					range.sort(function(a, b){return a-b});//ordenamos array
 				}
 				set(this,'pageSizeValues', A(range));
 			}
@@ -140,9 +140,6 @@ export default Ember.Component.extend({
 			set(row,'visivility',visivility);
 			return show;
 		});
-
-		console.log("globalSearch: "+JSON.stringify(globalSearch));
-		// set(this, 'dataLength', globalSearch.length);
 		return A(globalSearch);
 	}),
 
@@ -239,12 +236,7 @@ export default Ember.Component.extend({
 	}),
 
 	actions: {
-		update:function(object){
-			console.log("Update table: "+JSON.stringify(object));
-			//this.sendAction('actionUp', modelo);
-		},
 		delete:function(modelo){
-			console.log("MODELO EN TABLE: "+JSON.stringify(modelo));
 			if (confirm('¿Seguro que deseas borrar?')) {
 		      this.sendAction('actionDel', modelo);
 		    }
@@ -334,7 +326,8 @@ export default Ember.Component.extend({
 			set(this, 'currentPageNumber', pageNumber);
 		},
 
-		showCreate(){ //acción disparada cuando se hace click en el botón New Element
+		//acción disparada cuando se hace click en el botón New Element
+		showCreate(){
 			//resaltamos fila con un color
 			set(this, 'showCreateRow', 'show_row color-new-elem');
 			//deshabilitamos botón NewElement
@@ -343,12 +336,16 @@ export default Ember.Component.extend({
 			this.$('.inputNewRow')[0].autofocus = true;
 		},
 
-		cancelNew(){ //acción disparada cuando se hace click en el botón de cancelar nuevo elemento
+		//acción disparada cuando se hace click en el botón de cancelar nuevo elemento
+		cancelNew(){
+			//ocultamos fila de nuevo elemento
 			set(this, 'showCreateRow', 'hidden');
+			//restablecemos el botón de nuevo elemento
 			set(this, 'newElementClass', 'btn-warning');
 		},
 
-		editInline(doc){ //manejador para la edición inline
+		//manejador para la edición inline
+		editInline(doc){ 
 			//reseteamos las demás filas para que solo 1 se pueda estar editando a la vez
 			this.rowEditNow.forEach(function(row){
 				set(row, 'visivilityEdit', false);

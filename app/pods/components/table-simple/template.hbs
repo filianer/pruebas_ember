@@ -1,24 +1,8 @@
 <div class="panel panel-default">
-	<div class="panel-heading overf-h">
-		{{!-- filtro de búsqueda --}}
-		{{#if showGlobalFilter}}
-			{{partial 'components/table-simple/global-filter'}}
-		{{/if}}
-		
-		{{#if actionNew}}
-			{{#if createInline}}
-				<button type="button" class="btn {{newElementClass}}" {{action 'showCreate'}}>New Element</button>
-			{{else}}
-				{{#each properties as |prop|}}
-					{{#if prop.isVisible}}
-						{{!-- hay que tener cuidado de no permitir la propiedad value en properties --}}
-						{{input type=prop.type placeholder=prop.title value=prop.value}} 
-					{{/if}}
-				{{/each}}
-				<button type="button" class="btn  btn-warning" {{action 'new'}}>New</button>
-			{{/if}}
-		{{/if}}
-	</div>
+	{{#if showTableHeader}}
+		{{partial 'components/table-simple/table-header'}}
+	{{/if}}
+
   	<div class="panel-body">
 		<table class="{{if tableStriped 'table-striped'}} {{if tableBordered 'table-bordered'}} {{if tableCondensed 'table-condensed'}} table">
 			<thead>
@@ -33,7 +17,7 @@
 						{{/if}}
 					{{/each}}
 					{{#if actionsColumn}}
-						<th class="text-center v-middle">
+						<th class="text-center v-middle actions-w">
 							Actions
 						</th>
 					{{/if}}
@@ -42,24 +26,26 @@
 
 			<tbody>
 				{{!-- row para crear nuevo elemento si pasan createInline --}}
-				{{#if createInline}}
-					<tr class={{showCreateRow}}>
-						{{#each properties as |prop|}}
-							{{#if prop.isVisible}}
-								<td class="text-center v-middle">
-									{{input class="inputNewRow" type=prop.type placeholder=prop.title value=prop.value}} 
-								</td>
-							{{/if}}
-						{{/each}}
-						<td class="text-center">
-							<button type ="button" class="btn  btn-success w-40" {{action 'new'}}>Save</button>
-							<button type ="button" class="btn  btn-danger w-40" {{action 'cancelNew'}}>Cancel</button>
-						</td>
-					</tr>
+				{{#if showActionNew}}
+					{{#if createInline}}
+						<tr class={{showCreateRow}}>
+							{{#each properties as |prop|}}
+								{{#if prop.isVisible}}
+									<td class="text-center v-middle">
+										{{input class="inputNewRow" type=prop.type placeholder=prop.title value=prop.value}} 
+									</td>
+								{{/if}}
+							{{/each}}
+							<td class="text-center actions-w">
+								<button type ="button" class="btn  btn-success w-40" {{action 'new'}}>Save</button>
+								<button type ="button" class="btn  btn-danger w-40" {{action 'cancelNew'}}>Cancel</button>
+							</td>
+						</tr>
+					{{/if}}
 				{{/if}}
 				{{!-- contenido de la tabla --}}
 				{{#each visibleContent as |doc|}}
-					<tr class={{doc.visivility}}>
+					<tr class={{doc.visibility}}>
 						{{#each properties as |prop|}}
 							{{#if prop.isVisible}}
 								<td class="text-center v-middle">
@@ -70,7 +56,7 @@
 
 						{{!-- columna de acciones --}}
 						{{#if actionsColumn}}
-							<td class="text-center">
+							<td class="text-center actions-w">
 								{{#if route-edit}}
 									{{!-- linkeamos a la ruta del detalle para poder editar --}}
 									{{#link-to route-edit doc.id}}
@@ -89,7 +75,7 @@
 					</tr>
 					{{#if editInline}}
 						{{!-- outlet por fila para mostrar la edición en linea --}}
-						{{#if doc.visivilityEdit}}
+						{{#if doc.visibilityEdit}}
 							<tr class="color-up-elem">
 								{{outlet}}
 							</tr>

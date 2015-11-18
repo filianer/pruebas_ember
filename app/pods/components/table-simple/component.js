@@ -18,6 +18,10 @@ export default Ember.Component.extend({
 	showGlobalFilter: true,
 	// Determina si se muestra el footer de la tabla (paginación)
 	showTableFooter: true,
+	// Determina si se muestra el header de la tabla
+	showTableHeader:true,
+	// Determina si se muestra botón para añadir nuevo elemento
+	showActionNew:true,
 	// Determina si el filtrado ignora (mayúsculas/minúsculas)
 	filteringIgnoreCase: false,
 	// Tamaño de paginación por defecto
@@ -39,7 +43,7 @@ export default Ember.Component.extend({
 	//clase por defecto para mostrar la fila de creación
 	showCreateRow:"hidden",
 	//clase por defecto para el botón de nuevo elemento
-	newElementClass:"btn-warning",
+	newElementDisabled:false,
 	// Booleano que indica si se muestra la columan de acciones
 	actionsColumn: true,
 	//indice del select de tamaño de paginación seleccionado
@@ -89,6 +93,18 @@ export default Ember.Component.extend({
 		//filtro para ignorar mayúsculas
 		if ( this.get('filteringIgnoreCase') ) {
 			set(this, 'filteringIgnoreCase', this.get('filteringIgnoreCase'));
+		}
+
+		if ( this.get('showActionNew') ) {
+			set(this, 'showActionNew', this.get('showActionNew'));
+		}
+
+		if ( this.get('showTableFooter') ) {
+			set(this, 'showTableFooter', this.get('showTableFooter'));
+		}
+
+		if ( this.get('showTableHeader') ) {
+			set(this, 'showTableHeader', this.get('showTableHeader'));
 		}
 
 		//comprobamos si nos pasan paginación
@@ -160,8 +176,8 @@ export default Ember.Component.extend({
 				}
 				return false;
 			});
-			var visivility = show ? 'show_row':'hidden';
-			set(row,'visivility',visivility);
+			var visibility = show ? 'show_row':'hidden';
+			set(row,'visibility',visibility);
 			return show;
 		});
 		return A(globalSearch);
@@ -259,6 +275,20 @@ export default Ember.Component.extend({
 		}));
 	}),
 
+	handleVisibility(hidden){
+		if ( hidden ) {
+			set(this,'actionsColumn', false);
+			set(this,'showTableFooter', false);
+			set(this,'showGlobalFilter', false);
+			set(this, 'showActionNew', false);
+		} else {
+			set(this,'actionsColumn', true);
+			set(this,'showTableFooter', true);
+			set(this,'showGlobalFilter', true);
+			set(this, 'showActionNew', true);
+		}
+	},
+
 	actions: {
 		delete:function(modelo){
 			if (confirm('¿Seguro que deseas borrar?')) {
@@ -284,7 +314,7 @@ export default Ember.Component.extend({
 				this.sendAction('actionNew', newObject);
 				if ( this.get('createInline') ) {
 					set(this, 'showCreateRow', 'hidden');
-					set(this, 'newElementClass', 'btn-warning');
+					set(this, 'newElementDisabled', false);
 				}
 			}
 		},
@@ -355,7 +385,7 @@ export default Ember.Component.extend({
 			//resaltamos fila con un color
 			set(this, 'showCreateRow', 'show_row color-new-elem');
 			//deshabilitamos botón NewElement
-			set(this, 'newElementClass', 'disabled');
+			set(this, 'newElementDisabled', true);
 			//ponemos el foco en el primer input de inputNewRow
 			this.$('.inputNewRow')[0].autofocus = true;
 		},
@@ -365,21 +395,56 @@ export default Ember.Component.extend({
 			//ocultamos fila de nuevo elemento
 			set(this, 'showCreateRow', 'hidden');
 			//restablecemos el botón de nuevo elemento
-			set(this, 'newElementClass', 'btn-warning');
+			set(this, 'newElementDisabled', false);
 		},
 
 		//manejador para la edición inline
 		editInline(doc){ 
 			//reseteamos las demás filas para que solo 1 se pueda estar editando a la vez
 			this.rowEditNow.forEach(function(row){
-				set(row, 'visivilityEdit', false);
-				set(row,'visivility', 'show_row');
+				set(row, 'visibilityEdit', false);
+				set(row,'visibility', 'show_row');
 			});
 			set(this.rowEditNow,'length',0); //limpiamos array
 		
-			set(doc, 'visivilityEdit', true); //mostramos edición inline
-			set(doc, 'visivility', 'hidden'); //ocultamos row normal
+			set(doc, 'visibilityEdit', true); //mostramos edición inline
+			set(doc, 'visibility', 'hidden'); //ocultamos row normal
 			this.rowEditNow.push(doc); //añadimos a filas en edición
+		},
+
+		//cambia la propiedad visible de las columnas
+		toggleHidden (prop) {
+			var isVisible = true;
+			if ( typeof(prop['isVisible']) !== 'undefined' ) {
+				isVisible = prop['isVisible'];
+			}
+			set(prop,'isVisible', isVisible?false:true);
+			//comprobamos si queda alguna columna como visible, si no ocultamos acciones
+			var visible = false;
+			visible = this.properties.some(function(entry){
+				if ( entry['isVisible'] ) {
+					return true;
+				}
+			});
+			visible?this.handleVisibility(false):this.handleVisibility(true);
+		},
+
+		//pone todas las columnas como visibles, si están marcadas como mayBeHidden
+		showAllColumns(){
+			this.properties.forEach(function(entry){
+				if ( entry['mayBeHidden'] ) {
+					set(entry,'isVisible',true);
+				}
+			});
+			this.handleVisibility(false);
+		},
+
+		//pone todas las columnas como no visibles
+		hideAllColumns(){
+			this.properties.forEach(function(entry){
+				set(entry,'isVisible',false);
+			});
+			this.handleVisibility(true);
 		}
 	}
 });

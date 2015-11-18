@@ -32,6 +32,12 @@ Llamada:
 
 - tableCondensed: booleano, true para mostrar la tabla condensada
 
+- showTableFooter: booleano, true o no se pasa para mostrar el footer, false para no mostrarlo
+
+- showTableHeader: booleano, true o no se pasa para mostrar el header, false para no mostrarlo
+
+- showActionNew: booleano, true para poder añadir elemenots y false o no se pasa para no  poder añadir
+
 - showGlobalFilter: boobleano, true si queremos mostrar el filtro global y false o no se pasa si no queremos mostrarlo
 
 - filteringIgnoreCase: booleano, true si queremos que ingnore mayúsculas o false o no se pasa si no
@@ -78,7 +84,7 @@ TODOS:
 - Template para cada una de las propiedades
 - className para cada una de las propiedades 
 - filtrar por alguna determinada columna
-- mostrar u ocultar columnas
+- aprender a user media queries en los componentes
 - si añadimos nueva entrada se añade según la ordenación y es posible que no nos demos cuenta de que se ha insertado
 averiguar como solucionar esto, podríamos irnos a la página donde se ha insertado y resaltarlo por ej.
 - Añadir soporte para pasar mensajes para mostrar advertencias según quiera el usuario

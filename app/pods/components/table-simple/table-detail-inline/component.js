@@ -5,8 +5,8 @@ export default Ember.Component.extend({
 	actions: {
 		update:function(doc){
 			this.sendAction('actionUp', doc);
-			Ember.set(doc,'visivilityEdit', 'display: hidden');
-			Ember.set(doc,'visivility', 'table-row !important');
+			Ember.set(doc,'visibilityEdit', 'display: hidden');
+			Ember.set(doc,'visibility', 'table-row !important');
 		},
 		reset:function(doc){
 			//volvemos a dejar los datos como estaban por si hemos cambiado algo pero no le dimos a save
@@ -16,9 +16,9 @@ export default Ember.Component.extend({
 				this.sendAction(this.get('transition'));
 			}
 			//ocultamos fila de edición
-			Ember.set(doc,'visivilityEdit', false);
+			Ember.set(doc,'visibilityEdit', false);
 			//mostramos fila normal
-			Ember.set(doc,'visivility', 'show_row');
+			Ember.set(doc,'visibility', 'show_row');
 		}
 	}
 });

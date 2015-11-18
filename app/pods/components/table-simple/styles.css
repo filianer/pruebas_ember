@@ -20,10 +20,6 @@
 	vertical-align: middle;
 }
 
-.overf-h{
-	overflow: hidden;
-}
-
 .w-30{
   width: 30%;
 }
@@ -37,13 +33,25 @@
 }
 
 .color-new-elem{
-	background-color: #FFE7C5;
+	background-color: #FFE7C5 !important;
 }
 
 .color-up-elem{
-  background-color: #DBEDFF;
+  background-color: #DBEDFF !important;
 }
 
 .color-th{
   background-color: #E2E2E2;
+}
+
+.mleft-low{
+  margin-left: 2em;
+}
+
+.actions-w{
+  width: 20%;
+}
+
+table input{
+  width: 80%;
 }

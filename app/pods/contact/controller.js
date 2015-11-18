@@ -30,23 +30,27 @@ export default Ember.Controller.extend({
 			title:"ID",
 			type:"text",
 			hidden:true,
-			filter:false
+			filter:false,
+			mayBeHidden:true
 		},
 		{
 			name:"firstName",
 			title:"First Name",
-			type:"text"
+			type:"text",
+			mayBeHidden:true
 		},
 		{
 			name:"lastName",
 			title:"Last Name",
-			type:"text"
+			type:"text",
+			mayBeHidden:true
 		},
 		{
 			name:"age",
 			title:"Age",
 			type:"number",
-			filter:false //para que no filtre por edad (por ejemplo)
+			filter:false, //para que no filtre por edad (por ejemplo)
+			mayBeHidden:true
 		}
 	],
 	pagination:{

@@ -1,13 +1,13 @@
 <div class="table-footer clearfix">
 
-  <div class="col-sm-3 table-summary">
+  {{! resumen}}
+  <div class="col-xs-8 col-sm-3 table-summary">
     {{summary}}
   </div>
 
-  {{! pagesize selection start }}
-  <div class="col-sm-2">
+   {{! tanaño de página}}
+  <div class="col-xs-4 col-sm-2">
     <div class="pull-right">
-
       <select class="form-control changePageSize" {{action 'changePageSize' on='change'}}>
         {{#each pageSizeValues key="@index" as |item|}}
           <option value="{{item}}" selected={{is-equal item selectedValue}}>
@@ -15,12 +15,11 @@
           </option>
         {{/each}}
       </select>
-
     </div>
   </div>
-  {{! pagesize selection end }}
-  {{! pagination start }}
-  <div class="table-nav col-sm-7">
+
+  {{! paginación }}
+  <div class="table-nav col-xs-12 col-sm-7">
     <div class="btn-toolbar pull-right" role="toolbar">
       <a href="#" {{action "gotoFirst"}} class={{if gotoBackEnabled 'enabled' 'disabled'}}><span
       class="glyphicon glyphicon-chevron-left"></span></a>
@@ -44,5 +43,5 @@
     </div>
   </div>
   
-  {{! pagination end }}
+  {{! fin paginación }}
 </div>

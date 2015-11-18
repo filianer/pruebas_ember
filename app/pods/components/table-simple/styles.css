@@ -1,5 +1,5 @@
 .show_row{
-  display: table-row;
+  display: table-row !important;
 }
 
 .no-float{
@@ -38,4 +38,8 @@
 
 .color-new-elem{
 	background-color: #FFE7C5;
+}
+
+.color-up-elem{
+  background-color: #DBEDFF;
 }

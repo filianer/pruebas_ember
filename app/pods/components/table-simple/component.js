@@ -35,10 +35,12 @@ export default Ember.Component.extend({
 	properties: [],
 	// Propiedades para la ordenación de las filas
 	sortProps: [],
+	//variable para almacenar la fila que se está editando
+	rowEditNow: [],
 	//valor por defecto para mostrar la fila de creación
 	showCreateRow:"hidden",
 	//clase por defecto para el botón de nuevo elemento
-	showCreateClass:"btn-warning",
+	newElementClass:"btn-warning",
 	// Booleano que indica si se muestra la columan de acciones
 	actionsColumn: true,
 
@@ -266,7 +268,7 @@ export default Ember.Component.extend({
 				this.sendAction('actionNew', newObject);
 				if ( this.get('createInline') ) {
 					set(this, 'showCreateRow', 'hidden');
-					set(this, 'showCreateClass', 'btn-warning');
+					set(this, 'newElementClass', 'btn-warning');
 				}
 			}
 		},
@@ -336,14 +338,27 @@ export default Ember.Component.extend({
 			//resaltamos fila con un color
 			set(this, 'showCreateRow', 'show_row color-new-elem');
 			//deshabilitamos botón NewElement
-			set(this, 'showCreateClass', 'disabled');
+			set(this, 'newElementClass', 'disabled');
 			//ponemos el foco en el primer input de inputNewRow
 			this.$('.inputNewRow')[0].autofocus = true;
 		},
 
 		cancelNew(){ //acción disparada cuando se hace click en el botón de cancelar nuevo elemento
 			set(this, 'showCreateRow', 'hidden');
-			set(this, 'showCreateClass', 'btn-warning');
+			set(this, 'newElementClass', 'btn-warning');
+		},
+
+		editInline(doc){ //manejador para la edición inline
+			//reseteamos las demás filas para que solo 1 se pueda estar editando a la vez
+			this.rowEditNow.forEach(function(row){
+				set(row, 'visivilityEdit', false);
+				set(row,'visivility', 'show_row');
+			});
+			set(this.rowEditNow,'length',0); //limpiamos array
+		
+			set(doc, 'visivilityEdit', true); //mostramos edición inline
+			set(doc, 'visivility', 'hidden'); //ocultamos row normal
+			this.rowEditNow.push(doc); //añadimos a filas en edición
 		}
 	}
 });

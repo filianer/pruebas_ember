@@ -20,9 +20,9 @@
 		{{/if}}
 	</div>
   	<div class="panel-body">
-		<table class="table table-bordered">
+		<table class="{{if tableStriped 'table-striped'}} {{if tableBordered 'table-bordered'}} {{if tableCondensed 'table-condensed'}} table">
 			<thead>
-				<tr>
+				<tr class="color-th">
 					{{#each properties as |prop|}}
 						{{#if prop.isVisible}}
 							<th class="text-center v-middle">

@@ -26,6 +26,12 @@ Llamada:
 	order:"asc" 	//asc o desc
 }
 
+- tableStriped: booleano, true para mostrar la tabla con colores alternos
+
+- tableBordered: booleano, true para mostrar la tabla con bordes
+
+- tableCondensed: booleano, true para mostrar la tabla condensada
+
 - showGlobalFilter: boobleano, true si queremos mostrar el filtro global y false o no se pasa si no queremos mostrarlo
 
 - filteringIgnoreCase: booleano, true si queremos que ingnore mayúsculas o false o no se pasa si no

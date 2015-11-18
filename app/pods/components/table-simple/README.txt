@@ -21,6 +21,11 @@ Llamada:
 	range:[5,10,25,50]		//valor del rango para cambiar paginación, si no se pasa por defecto es 10,25,50
 }
 
+- initOrder:{ 		//ordenamiento inicial por algún campo, si no se pasa se ordena por id o por el primer campo
+	key:"firstName",
+	order:"asc" 	//asc o desc
+}
+
 - showGlobalFilter: boobleano, true si queremos mostrar el filtro global y false o no se pasa si no queremos mostrarlo
 
 - filteringIgnoreCase: booleano, true si queremos que ingnore mayúsculas o false o no se pasa si no
@@ -66,8 +71,6 @@ Llamada:
 TODOS:
 - Template para cada una de las propiedades
 - className para cada una de las propiedades 
-- añadir method-edit para editar inline o con modal
-- pasar ordenamiento por defecto por algún campo
 - filtrar por alguna determinada columna
 - mostrar u ocultar columnas
 - si añadimos nueva entrada se añade según la ordenación y es posible que no nos demos cuenta de que se ha insertado

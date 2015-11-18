@@ -52,6 +52,10 @@ export default Ember.Controller.extend({
 	pagination:{
 		default:5,
 		range:[10,25,50]
+	},
+	initOrder:{
+		key:"id",
+		order:"desc"
 	}
 	
 });

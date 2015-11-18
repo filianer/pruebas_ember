@@ -63,6 +63,9 @@ export default Ember.Component.extend({
 		// });
 		this.properties = this.get('properties'); //propiedades de las columnas
 		this.datos = this.get('modelo');
+		var existsId = false; //para pintar ordenamiento por defecto
+		var orderKey = null; //ordenamiento por esta key, si no viene ordenaremos por el primer campo
+		var order = "desc";
 
 		//si no viene la acción de borrado ni route-edit ponemos actionsColumn a false para no pintar la columna de acciones
 		if (!this.get('actionDel') && !this.get('route-edit') && !this.get('createInline') ) {
@@ -73,6 +76,14 @@ export default Ember.Component.extend({
 		this.properties.forEach(function(entry){
 			var isVisible = ( typeof(entry['hidden']) === 'undefined' || !entry['hidden'] ) ? true : false;
 			set(entry, 'isVisible', isVisible);
+			if ( !existsId ) {
+				if ( entry['name'] == "id" ) {
+					orderKey = "id";
+					existsId = true;
+				} else if ( orderKey == null ) {
+					orderKey = entry['name'];
+				}
+			}
 		});
 
 		//filtro para ignorar mayúsculas
@@ -98,6 +109,19 @@ export default Ember.Component.extend({
 			//Establecemos el select con el tamaño de la página actual
 			set(this,'selectedValue',pSize);
 		}
+
+		//Comprobamos si nos pasan ordenamiento inicial y si no ordenamos por orderKey en orden descenente
+		if ( this.get('initOrder') ) {
+			var initOrder = this.get('initOrder');
+			if ( initOrder['key'] ) {
+				orderKey = initOrder['key'];
+			}
+			if ( initOrder['order'] ) {
+				order = initOrder['order'];
+			}
+		}
+		this.set('sortProps', [orderKey + ':' + order]);
+		
 	},
 
 	//Obsevador para cuando se escribe en el filtro

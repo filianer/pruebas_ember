@@ -13,6 +13,7 @@ Llamada:
 	}
 ]
 
+- editInline: booleano, true para editar elementos en línea dentro de la table o false o no se pasa para editarlos con modal
 - createInline: booleano, true para crear nuevos elementos en línea dentro de la tabla o false o no se pasa para crearlos fuera 
 
 - pagination:{
@@ -30,7 +31,7 @@ Llamada:
 
 *******************EDITAR*******************
 - route-edit: nombre de la ruta donde se editarán las entradas (Opcional, si no se pasa no se pinta el botón edit)
-	Para editar los campos en el template que tengamos en route-edit podemos llamar al componente table-simple/table-detail
+	* Para editar los campos en el template que tengamos en route-edit podemos llamar al componente table-simple/table-detail
 		{{table-simple/table-detail model=model actionDel="delete" actionUp="update" title="Edición" transition="transition"}}
 		- model: modelo para la acción
 		- actionDel: Acción para borrar elemento (Opcional, si no se pasa no se mete el botón delete) 
@@ -50,7 +51,14 @@ Llamada:
 
 		*Será obligatorio pasar la propiedad id para poder editar
 
-	o bien podemos crearnos nuestro propio template
+	* IMPORTANTE: si usamos editInline = true habrá que usar el componente table-simple/table-detail-inline
+		{{#table-simple/table-detail-inline model=model actionUp="update" transition="transition"}}
+			<td class="text-center">{{input type="text" value=model.firstName placeholder="first name"}}</td>
+			<td class="text-center">{{input type="text" value=model.lastName placeholder="last name"}}</td>
+			<td class="text-center">{{input type="number" value=model.age placeholder="age"}}</td>
+		{{/table-simple/table-detail-inline}}
+
+	* o bien podemos crearnos nuestro propio template
 ********************************************
 
 *Para que coja los estilos dentro del componente hay que tener instalado: ember install ember-component-css

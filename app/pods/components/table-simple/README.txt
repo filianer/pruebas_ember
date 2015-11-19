@@ -49,6 +49,24 @@ ahora mismo todas las columnas visibles usan este filtro, si se desea controlar 
 
 - actionNew: acción llamada para crear nuevas entradas en la tabla (Opcional, si no se pasa  no se permite añadir nuevos campos)
 
+- customMessages = { //Mensajes customizados para la tabla
+	'new-element':'New Element',					//Texto del botón para añadir nuevo elemento
+	'searchLabel': 'Search',						//Texto placeholder del input para filtrar global
+	'searchLabelColumn': 'Search',					//Texto placeholder del input para filtrar columnas
+	'columns-title': 'Columns', 					//Texto del botón para seleccionar columnas visibles
+	'columns-showAll': 'Show All', 					//Texto para mostrar todas las columnas
+	'columns-hideAll': 'Hide All', 					//Texto para ocultar todas las columnas
+	'columns-restoreDefaults': 'Restore Defaults', 	//Texto para restaurar la visibilidad de las columnas por defecto
+	'button-save':'Save', 							//Texto para el botón de guardado
+	'button-cancel':'Cancel', 						//Texto para el botón de cancelar
+	'tableSummary': 'Show %@ - %@ of %@',			//Texto para el summary en formato para usar  Ember.String.loc
+	'allColumnsAreHidden': 'All columns are hidden. Use <strong>columns</strong>-dropdown to show some of them', 
+													//texto para mostrar cuando no se ve ninguna columna
+	'noDataToShow': 'No records to show', 			//Texto para mostrar cuando no hay resultados
+	confirmDelete: 'Are you sure to delete it?',	//Texto para confirmar borrado de elementos
+	confirmEmptySave: 'Element Empty, are you sure to save it?', //Texto para confirmar guardado de elemento vacío
+};
+
 *******************EDITAR*******************
 - route-edit: nombre de la ruta donde se editarán las entradas (Opcional, si no se pasa no se pinta el botón edit)
 	* Para editar los campos en el template que tengamos en route-edit podemos llamar al componente table-simple/table-detail
@@ -57,6 +75,9 @@ ahora mismo todas las columnas visibles usan este filtro, si se desea controlar 
 		- actionDel: Acción para borrar elemento (Opcional, si no se pasa no se mete el botón delete) 
 		- actionUp: Acción para actualizar elemento (Opcional, si no se pasa no se pinta el botón save)
 		- title: titulo del modal (Opcional, si no se pasa se pone por defecto "Edit")
+		- msgSave: texto botón guardar (Opcional, defecto "Save")
+		- msgDelete: texto botón borrar (Opcional, defecto "Delete")
+		- msgCancel: texto botón cancelar (Opcional, defecto "Cancel")
 		- transition: si queremos que cuando se cancele el model vuelva a la ruta del padre deberemos definir en el route una acción para que vaya a la ruta que queramos ej:
 			transition:function(){
 				this.transitionTo('contact');
@@ -89,7 +110,6 @@ TODOS:
 - saber donde ubicar los styles en los componentes ya que tal y como está no se permiten media queries
 - si añadimos nueva entrada se añade según la ordenación y es posible que no nos demos cuenta de que se ha insertado
 averiguar como solucionar esto, podríamos irnos a la página donde se ha insertado y resaltarlo por ej.
-- Añadir soporte para pasar mensajes para mostrar advertencias según quiera el usuario
 - Añadir validate para cada propiedad
 - actualizar contenido filtrado si se hace un update o por si llegara un evento que cambiara los datos
 

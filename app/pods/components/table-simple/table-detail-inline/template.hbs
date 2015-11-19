@@ -1,7 +1,7 @@
 {{yield}}
 <td class="text-center">
   {{#if actionUp}}
-	  <button type ="button" class="btn btn-success" {{action actionUp model}}>Save</button>
+	  <button type ="button" class="btn btn-success" {{action actionUp model}}>{{if msgSave msgSave "Save"}}</button>
   {{/if}}
-  <button type="button" class="btn btn-warning" data-dismiss="modal" {{action 'reset' model}}>Cancel</button>
+  <button type="button" class="btn btn-warning" data-dismiss="modal" {{action 'reset' model}}>{{if msgCancel msgCancel "Cancel"}}</button>
 </td>

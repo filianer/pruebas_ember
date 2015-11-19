@@ -8,6 +8,7 @@ const {
 	observer,
 	get,
 	set,
+	getWithDefault,
 	isNone,
 	isPresent,
 	compare,
@@ -15,6 +16,24 @@ const {
 } = Ember;
 
 const O = Ember.Object;
+const keys = Object.keys;
+
+var defaultMessages = {
+	'new-element':'New Element',
+	searchLabel: 'Search',
+	searchLabelColumn: 'Search',
+	'columns-title': 'Columns',
+	'columns-showAll': 'Show All',
+	'columns-hideAll': 'Hide All',
+	'columns-restoreDefaults': 'Restore Defaults',
+	'button-save':'Save',
+	'button-cancel':'Cancel',
+	confirmDelete: 'Are you sure to delete it?',
+	confirmEmptySave: 'Element Empty, are you sure to save it?',
+	tableSummary: 'Show %@ - %@ of %@',
+	allColumnsAreHidden: 'All columns are hidden. Use <strong>columns</strong>-dropdown to show some of them',
+	noDataToShow: 'No records to show'
+};
 
 export default Ember.Component.extend({
 
@@ -40,6 +59,8 @@ export default Ember.Component.extend({
 	filterString: '',
 	// Array donde se guardarán nuestros objetos
 	datos: A([]),
+	// mensajes para la tabla
+  	messages: O.create({}),
 	// Propiedades de nuestra tabla
 	properties: [],
 	// Propiedades para la ordenación de las filas
@@ -48,6 +69,8 @@ export default Ember.Component.extend({
 	rowEditNow: [],
 	//clase por defecto para mostrar la fila de creación
 	showCreateRow:"hidden",
+	//flag para indicar que no hay columnas mostrandose
+	allColumnsAreHidden: false,
 	//clase por defecto para el botón de nuevo elemento
 	newElementDisabled:false,
 	// Booleano que indica si se muestra la columan de acciones
@@ -59,6 +82,7 @@ export default Ember.Component.extend({
 
 	setup: on('init', function() {
 		this._setupConfig();
+		this._setupMessages();
 	}),
 
 	//Establece la configuración inicial
@@ -161,6 +185,22 @@ export default Ember.Component.extend({
 		}
 		this.set('sortProps', [orderKey + ':' + order]);
 		
+	},
+
+	//establece los mensajes por defecto o los que nos pasa el usuario
+	_setupMessages () {
+		var newMessages = {};
+		const customMessages = getWithDefault(this, 'customMessages', {});
+		keys(customMessages).forEach(k => {
+			set(newMessages, k, get(customMessages, k));
+		});
+
+		keys(defaultMessages).forEach(k => {
+			if(isNone(get(newMessages, k))) {
+				set(newMessages, k, get(defaultMessages, k));
+			}
+		});
+		set(this, 'messages', O.create(newMessages));
 	},
 
 	//función para actualizar el filtrado si se cambia el valor de un dato
@@ -285,7 +325,7 @@ export default Ember.Component.extend({
 		const isLastPage = !get(this, 'gotoForwardEnabled');
 		const firstIndex = 0 === length ? 0 : pageSize * (currentPageNumber - 1) + 1;
 		const lastIndex = isLastPage ? length : currentPageNumber * pageSize;
-		return "Mostrando "+firstIndex+" - "+lastIndex+" de "+length;
+		return Ember.String.loc(get(this, 'messages.tableSummary'), firstIndex, lastIndex, length);
 	}),
 
 	//paginación con números
@@ -335,18 +375,20 @@ export default Ember.Component.extend({
 			set(this,'actionsColumn', false);
 			set(this,'showTableFooter', false);
 			set(this,'showGlobalFilter', false);
-			set(this, 'showActionNew', false);
+			set(this,'showActionNew', false);
+			set(this,'allColumnsAreHidden',true);
 		} else {
 			set(this,'actionsColumn', true);
 			set(this,'showTableFooter', true);
 			set(this,'showGlobalFilter', true);
 			set(this, 'showActionNew', true);
+			set(this,'allColumnsAreHidden',false);
 		}
 	},
 
 	actions: {
 		delete:function(modelo){
-			if (confirm('¿Seguro que deseas borrar?')) {
+			if (confirm(get(this, 'messages.confirmDelete'))) {
 		      this.sendAction('actionDel', modelo);
 		    }
 		},
@@ -369,7 +411,7 @@ export default Ember.Component.extend({
 
 			//comprobamos que el elemento no esté vacío
 			//TODO: se podría mandar un validate para cada propiedad
-			if ( okValue || confirm('Elemento vacío, ¿seguro que deseas guardar?') ) {
+			if ( okValue || confirm(get(this, 'messages.confirmEmptySave')) ) {
 				this.sendAction('actionNew', newObject);
 				if ( this.get('createInline') ) {
 					set(this, 'showCreateRow', 'hidden');

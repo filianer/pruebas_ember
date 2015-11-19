@@ -25,13 +25,16 @@
 			</thead>
 
 			<tbody>
+				{{#if allColumnsAreHidden}}
+					<tr><td colspan={{properties.length}}>{{{messages.allColumnsAreHidden}}}</td></tr>
+				{{/if}}
 				{{!-- filtrado por columnas --}}
 				{{#if useFilteringByColumns}}
 					<tr class="tr-filter">
 						{{#each properties as |prop|}}
 							{{#if prop.isVisible}}
 								<td class="text-center v-middle">
-									{{input type="text" value=prop.filterString placeholder="Filtrar"}}
+									{{input type="text" value=prop.filterString placeholder=messages.searchLabelColumn}}
 								</td>
 							{{/if}}
 						{{/each}}
@@ -58,46 +61,49 @@
 						</tr>
 					{{/if}}
 				{{/if}}
-				{{!-- contenido de la tabla --}}
-				{{#each visibleContent as |doc|}}
-					<tr class={{doc.visibility}}>
-						{{#each properties as |prop|}}
-							{{#if prop.isVisible}}
-								<td class="text-center v-middle">
-									<span>{{get doc prop.name}}</span>
+				{{#if visibleContent.length}}
+					{{!-- contenido de la tabla --}}
+					{{#each visibleContent as |doc|}}
+						<tr class={{doc.visibility}}>
+							{{#each properties as |prop|}}
+								{{#if prop.isVisible}}
+									<td class="text-center v-middle">
+										<span>{{get doc prop.name}}</span>
+									</td>
+								{{/if}}
+							{{/each}}
+
+							{{!-- columna de acciones --}}
+							{{#if actionsColumn}}
+								<td class="text-center actions-w">
+									{{#if route-edit}}
+										{{!-- linkeamos a la ruta del detalle para poder editar --}}
+										{{#link-to route-edit doc.id}}
+											{{#if editInline}}
+												<button class="btn  btn-success w-30" {{action 'editInline' doc}}><span class='glyphicon glyphicon-pencil'></span></button>
+											{{else}}
+												<button class="btn  btn-success w-30" data-toggle="modal" data-target="#modalDetail"><span class='glyphicon glyphicon-pencil'></span></button>
+											{{/if}}
+										{{/link-to}}
+									{{/if}}
+									{{#if actionDel}}
+										<button class="btn  btn-danger w-30" onClick={{action 'delete' doc}}><span class='glyphicon glyphicon-trash'></span></button>
+									{{/if}}
 								</td>
 							{{/if}}
-						{{/each}}
-
-						{{!-- columna de acciones --}}
-						{{#if actionsColumn}}
-							<td class="text-center actions-w">
-								{{#if route-edit}}
-									{{!-- linkeamos a la ruta del detalle para poder editar --}}
-									{{#link-to route-edit doc.id}}
-										{{#if editInline}}
-											<button class="btn  btn-success w-30" {{action 'editInline' doc}}><span class='glyphicon glyphicon-pencil'></span></button>
-										{{else}}
-											<button class="btn  btn-success w-30" data-toggle="modal" data-target="#modalDetail"><span class='glyphicon glyphicon-pencil'></span></button>
-										{{/if}}
-									{{/link-to}}
-								{{/if}}
-								{{#if actionDel}}
-									<button class="btn  btn-danger w-30" onClick={{action 'delete' doc}}><span class='glyphicon glyphicon-trash'></span></button>
-								{{/if}}
-							</td>
+						</tr>
+						{{#if editInline}}
+							{{!-- outlet por fila para mostrar la edición en linea --}}
+							{{#if doc.visibilityEdit}}
+								<tr class="color-up-elem">
+									{{outlet}}
+								</tr>
+							{{/if}}
 						{{/if}}
-					</tr>
-					{{#if editInline}}
-						{{!-- outlet por fila para mostrar la edición en linea --}}
-						{{#if doc.visibilityEdit}}
-							<tr class="color-up-elem">
-								{{outlet}}
-							</tr>
-						{{/if}}
-					{{/if}}
-					
-				{{/each}}
+					{{/each}}
+				{{else}}
+					<tr><td colspan={{properties.length}}>{{{messages.noDataToShow}}}</td></tr>
+				{{/if}}
 			</tbody>
 		</table>
 		{{!-- paginación --}}

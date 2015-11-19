@@ -4,7 +4,7 @@
 			{{#if showActionNew}}
 				{{#if actionNew}}
 					{{#if createInline}}
-						<button disabled={{newElementDisabled}} type="button" class="btn btn-warning" {{action 'showCreate'}}>Nuevo Elemento</button>
+						<button disabled={{newElementDisabled}} type="button" class="btn btn-warning" {{action 'showCreate'}}>{{messages.new-element}}</button>
 					{{else}}
 						{{#each properties as |prop|}}
 							{{#if prop.isVisible}}
@@ -23,7 +23,7 @@
 				<div class="pull-right">
 				  <form class="form-inline globalSearch" action="">
 				    <div class="form-group">
-				      {{input type="text" value=filterString placeholder="Filtrar" class="form-control filterString"}}
+				      {{input type="text" value=filterString placeholder=messages.searchLabel class="form-control filterString"}}
 				    </div>
 				  </form>
 				</div>
@@ -34,12 +34,12 @@
 				<div class="pull-right columns-dropdown mleft-low">
 				  <div class="btn-group">
 				    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-				      Columnas<span class="caret"></span>
+				      {{messages.columns-title}}<span class="caret"></span>
 				    </button>
 				    <ul class="dropdown-menu pull-right">
-				      <li><a {{action "showAllColumns"}} href="#">Mostrar Todo</a></li>
-				      <li><a {{action "hideAllColumns"}} href="#">Ocultar Todo</a></li>
-				      <li><a {{action "restoreDefaultVisibility"}} href="#">Restablecer</a></li>
+				      <li><a {{action "showAllColumns"}} href="#">{{messages.columns-showAll}}</a></li>
+				      <li><a {{action "hideAllColumns"}} href="#">{{messages.columns-hideAll}}</a></li>
+				      <li><a {{action "restoreDefaultVisibility"}} href="#">{{messages.columns-restoreDefaults}}</a></li>
 				      <li class="divider"></li>
 				      {{#each properties as |prop|}}
 				        {{#if prop.mayBeHidden}}

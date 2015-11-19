@@ -41,6 +41,8 @@ Llamada:
 - useFilteringByColumns: booleano, true para añadir filtrado por columnas y false o no se pasa para no añadirlo,
 ahora mismo todas las columnas visibles usan este filtro, si se desea controlar podríamos añadir otra propiedad a properties
 
+- showColumnsFilter: booleano, true para añadir botón para mostrar/ocultar columnas, Ojo con añadir este elemento si se usa la edición en línea (editInline) porque puede causar problemas visuales
+
 - showGlobalFilter: boobleano, true si queremos mostrar el filtro global y false o no se pasa si no queremos mostrarlo
 
 - filteringIgnoreCase: booleano, true si queremos que ingnore mayúsculas o false o no se pasa si no
@@ -103,6 +105,8 @@ ahora mismo todas las columnas visibles usan este filtro, si se desea controlar 
 ********************************************
 
 *Para que coja los estilos dentro del componente hay que tener instalado: ember install ember-component-css
+
+*La edición en linea tal y como está hecha no se comporta bien con el botón de ocultar y mostrar columnas, se puede deshabilitar la edición en línea cuando se habilite este botón
 
 TODOS:
 - Template para cada una de las propiedades

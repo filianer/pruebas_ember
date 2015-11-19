@@ -25,6 +25,21 @@
 			</thead>
 
 			<tbody>
+				{{!-- filtrado por columnas --}}
+				{{#if useFilteringByColumns}}
+					<tr class="tr-filter">
+						{{#each properties as |prop|}}
+							{{#if prop.isVisible}}
+								<td class="text-center v-middle">
+									{{input type="text" value=prop.filterString placeholder="Filtrar"}}
+								</td>
+							{{/if}}
+						{{/each}}
+						{{#if actionsColumn}}
+							<td></td>
+						{{/if}}
+					</tr>
+				{{/if}}
 				{{!-- row para crear nuevo elemento si pasan createInline --}}
 				{{#if showActionNew}}
 					{{#if createInline}}

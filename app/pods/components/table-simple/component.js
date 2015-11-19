@@ -8,6 +8,10 @@ const {
 	observer,
 	get,
 	set,
+	isNone,
+	isPresent,
+	compare,
+	setProperties,
 } = Ember;
 
 const O = Ember.Object;
@@ -24,6 +28,8 @@ export default Ember.Component.extend({
 	showActionNew:true,
 	// Determina si el filtrado ignora (mayúsculas/minúsculas)
 	filteringIgnoreCase: false,
+	// Determina si se usa el filtrado por columnas
+	useFilteringByColumns: false,
 	// Tamaño de paginación por defecto
 	pageSize: 10, 
 	// Página actual para paginación
@@ -55,10 +61,11 @@ export default Ember.Component.extend({
 
 	//Establece la configuración inicial
 	_setupConfig () {
+		var self = this;
 		//con this.get('modelo') tenemos un RecordArray
 		//RecordArray tiene la propiedad type que nos devuelve un DS.Model con el que podemos sacar las propiedades
 		//var modelo = this.get('modelo').type;
-		//var self = this;
+		
 		// modelo.eachAttribute(function(name, meta) {
 		// 	//según el tipo de dato establecemos type para los input de la tabla
 		// 	var type = (meta.type == 'number') ? 'number':'text';
@@ -78,16 +85,26 @@ export default Ember.Component.extend({
 
 		//recorremos las propiedades para ponerles el atributo de visible, si no viene o si viene como true serán visibles
 		this.properties.forEach(function(entry){
-			var isVisible = ( typeof(entry['hidden']) === 'undefined' || !entry['hidden'] ) ? true : false;
+			var isVisible = ( isNone(entry['hidden']) || !entry['hidden'] ) ? true : false;
 			set(entry, 'isVisible', isVisible);
+			//comprobamos key para ordanación por defecto
 			if ( !existsId ) {
-				if ( entry['name'] == "id" ) {
+				if ( compare(entry['name'], "id") === 0 ) {
 					orderKey = "id";
 					existsId = true;
-				} else if ( orderKey == null ) {
+				} else if ( isNone(orderKey) ) {
 					orderKey = entry['name'];
 				}
 			}
+
+			//establecemos para filtrado por columnas
+			setProperties(entry, {
+				filterString: ''
+			});
+
+			//añadimos observador en las propiedades por si hay un filtrado y las propiedades se actualian tenemos que actualizar el filtrado
+			var propertyName = get(entry,'name');
+			self.addObserver(`datos.@each.${propertyName}`, self, self.updateFilter);
 		});
 
 		//filtro para ignorar mayúsculas
@@ -105,6 +122,10 @@ export default Ember.Component.extend({
 
 		if ( this.get('showTableHeader') ) {
 			set(this, 'showTableHeader', this.get('showTableHeader'));
+		}
+
+		if ( this.get('useFilteringByColumns') ) {
+			set(this, 'useFilteringByColumns', this.get('useFilteringByColumns'));
 		}
 
 		//comprobamos si nos pasan paginación
@@ -140,14 +161,15 @@ export default Ember.Component.extend({
 		
 	},
 
-	//Obsevador para cuando se escribe en el filtro
-	changedFilter: observer('filterString', function(){
-		this.get('filteredContent')
-	}),
+	//función para actualizar el filtrado si se cambia el valor de una propiedad
+	updateFilter(){
+		console.log("Entra en update filter");
+		//TODO: Actualizar los datos del filtro
+	},
 
 	//Función de filtrado
-	filteredContent: computed('filterString', 'datos.[]', function() {
-
+	filteredContent: computed('filterString', 'datos.[]','properties.@each.filterString', function() {
+		console.log("ENTRA EN FILTRAR CONTENIDO");
 		var filteringIgnoreCase = this.filteringIgnoreCase;
 		var data = this.datos;
 		var properties = this.properties; //propiedades de las columnas
@@ -159,11 +181,11 @@ export default Ember.Component.extend({
 
 		// global search, filtra por cualquier campo que tenga declarado filter=true o no tenga filter
 		var globalSearch = data.filter(function (row) {
-			var show = properties.any(c => {
+			return properties.any(c => {
 				//comprobamos si la propiedad es filtrable y si está visible
 				var filter = get(c, 'filter');
 				var isVisible = get(c, 'isVisible');
-				if( (typeof(filter) === 'undefined' || filter) && (typeof(isVisible) === 'undefined' || isVisible) ) {
+				if( (isNone(filter) || filter) && (isNone(isVisible) || isVisible) ) {
 					const propertyName = get(c, 'name');
 					if (propertyName) {
 						var cellValue = '' + get(row, propertyName);
@@ -176,11 +198,33 @@ export default Ember.Component.extend({
 				}
 				return false;
 			});
-			var visibility = show ? 'show_row':'hidden';
-			set(row,'visibility',visibility);
-			return show;
 		});
-		return A(globalSearch);
+		//si no se usa filtro por columnas retornamos
+		if (!this.useFilteringByColumns) {
+			return A(globalSearch);
+		}
+
+		//si se usa filtro por columnas filtramos el contenido para cada una de las columnas
+		return A(globalSearch.filter(row => {
+			return properties.every(c => {
+				const propertyName = get(c, 'name');
+				if (propertyName) {
+					var cellValue = '' + get(row, propertyName);
+					var filterString = get(c, 'filterString');
+
+					if ('' === filterString) {
+						return true;
+					}
+						
+					if (filteringIgnoreCase) {
+						cellValue = cellValue.toLowerCase();
+						filterString = filterString.toLowerCase();
+					}
+					return -1 !== cellValue.indexOf(filterString);
+				}
+				return true;
+			});
+		}));
 	}),
 
 	//ordenación de filas
@@ -300,13 +344,17 @@ export default Ember.Component.extend({
 			var newObject = {};
 			var okValue = false;
 			this.properties.forEach(function(entry){
-				if ( entry.value && (entry.value).length > 0){
+				if ( isPresent(entry.value) ){
 					okValue = true;
+					newObject[entry.name] = entry.value;
+					//reseteamos propiedad
+					Ember.set(entry,'value','');
 				}
-				newObject[entry.name] = entry.value;
-				//reseteamos propiedad
-				Ember.set(entry,'value','');
 			});
+
+			// var okValue = this.properties.any(prop => {
+			// 	return isPresent(prop.value);
+			// });
 
 			//comprobamos que el elemento no esté vacío
 			//TODO: se podría mandar un validate para cada propiedad
@@ -415,7 +463,7 @@ export default Ember.Component.extend({
 		//cambia la propiedad visible de las columnas
 		toggleHidden (prop) {
 			var isVisible = true;
-			if ( typeof(prop['isVisible']) !== 'undefined' ) {
+			if (!isNone(prop['isVisible'])) {
 				isVisible = prop['isVisible'];
 			}
 			set(prop,'isVisible', isVisible?false:true);
@@ -450,7 +498,7 @@ export default Ember.Component.extend({
 		//restablece las columnas a su visibilidad original
 		restoreDefaultVisibility(){
 			this.properties.forEach(function(entry){
-				var isVisible = ( typeof(entry['hidden']) === 'undefined' || !entry['hidden'] ) ? true : false;
+				var isVisible = ( isNone(entry['hidden']) || !entry['hidden'] ) ? true : false;
 				set(entry, 'isVisible', isVisible);
 			});
 		}

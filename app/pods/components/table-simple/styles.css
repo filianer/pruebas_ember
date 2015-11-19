@@ -52,3 +52,11 @@ table input{
   width: 80%;
 }
 
+.tr-filter{
+  background-color: #EFEFEF !important;
+}
+
+.tr-filter input{
+  border-style: hidden;
+}
+

@@ -38,6 +38,9 @@ Llamada:
 
 - showActionNew: booleano, true para poder añadir elemenots y false o no se pasa para no  poder añadir
 
+- useFilteringByColumns: booleano, true para añadir filtrado por columnas y false o no se pasa para no añadirlo,
+ahora mismo todas las columnas visibles usan este filtro, si se desea controlar podríamos añadir otra propiedad a properties
+
 - showGlobalFilter: boobleano, true si queremos mostrar el filtro global y false o no se pasa si no queremos mostrarlo
 
 - filteringIgnoreCase: booleano, true si queremos que ingnore mayúsculas o false o no se pasa si no
@@ -83,10 +86,10 @@ Llamada:
 TODOS:
 - Template para cada una de las propiedades
 - className para cada una de las propiedades 
-- filtrar por alguna determinada columna
-- aprender a user media queries en los componentes
+- saber donde ubicar los styles en los componentes ya que tal y como está no se permiten media queries
 - si añadimos nueva entrada se añade según la ordenación y es posible que no nos demos cuenta de que se ha insertado
 averiguar como solucionar esto, podríamos irnos a la página donde se ha insertado y resaltarlo por ej.
 - Añadir soporte para pasar mensajes para mostrar advertencias según quiera el usuario
 - Añadir validate para cada propiedad
+- actualizar contenido filtrado si se hace un update o por si llegara un evento que cambiara los datos
 

@@ -9,6 +9,9 @@ Router.map(function() {
   this.route('contact', function() {
     this.route('detail',{path: ':id'});
   });
+  this.route('product', function() {
+    this.route('detail',{path: ':id'});
+  });
 });
 
 export default Router;

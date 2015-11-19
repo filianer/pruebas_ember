@@ -54,6 +54,8 @@ export default Ember.Component.extend({
 	actionsColumn: true,
 	//indice del select de tamaño de paginación seleccionado
 	selectedValue: 1,
+	//flag para actualizar el filtro cuando se actualizan campos
+	flagUpdateFilter:false,
 
 	setup: on('init', function() {
 		this._setupConfig();
@@ -161,14 +163,23 @@ export default Ember.Component.extend({
 		
 	},
 
-	//función para actualizar el filtrado si se cambia el valor de una propiedad
+	//función para actualizar el filtrado si se cambia el valor de un dato
 	updateFilter(){
-		console.log("Entra en update filter");
-		//TODO: Actualizar los datos del filtro
+		/*
+			TODO
+			hay que tener cuidado porque si se está editando alguna fila y los valores que cambiamos no concuerdan
+			con el filtro, la fila se filtra, este filtro no debería afectar a la fila de edición
+			vamos a comprobar si actualizando los datos, se actualizan en la tabla sin necesidad de usar esta función
+			si esto es así quitaremoms los observer de los datos y actualizaremos el filtro en la función save,
+			si la edición se hace en modo modal no hay ningún problema
+		*/
+		if ( !this.get('editInline') ) {
+			this.toggleProperty('flagUpdateFilter');
+		}
 	},
 
 	//Función de filtrado
-	filteredContent: computed('filterString', 'datos.[]','properties.@each.filterString', function() {
+	filteredContent: computed('filterString', 'datos.[]','properties.@each.filterString', 'flagUpdateFilter', function() {
 		console.log("ENTRA EN FILTRAR CONTENIDO");
 		var filteringIgnoreCase = this.filteringIgnoreCase;
 		var data = this.datos;
@@ -228,7 +239,7 @@ export default Ember.Component.extend({
 	}),
 
 	//ordenación de filas
-	sortedContent: Ember.computed.sort('filteredContent.[]', 'sortProps'),
+	sortedContent: computed.sort('filteredContent.[]', 'sortProps'),
 
 	//Contenido visible según filtrado, este es el contenido que se mostrará en nuestra tabla
 	visibleContent: computed('sortedContent.[]', 'pageSize', 'currentPageNumber', function () {

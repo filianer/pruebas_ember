@@ -445,6 +445,14 @@ export default Ember.Component.extend({
 				set(entry,'isVisible',false);
 			});
 			this.handleVisibility(true);
+		},
+
+		//restablece las columnas a su visibilidad original
+		restoreDefaultVisibility(){
+			this.properties.forEach(function(entry){
+				var isVisible = ( typeof(entry['hidden']) === 'undefined' || !entry['hidden'] ) ? true : false;
+				set(entry, 'isVisible', isVisible);
+			});
 		}
 	}
 });

@@ -1,25 +1,7 @@
 <div class="table-footer clearfix">
 
-  {{! resumen}}
-  <div class="col-xs-8 col-sm-3 table-summary">
-    {{summary}}
-  </div>
-
-   {{! tanaño de página}}
-  <div class="col-xs-4 col-sm-2">
-    <div class="pull-right">
-      <select class="form-control changePageSize" {{action 'changePageSize' on='change'}}>
-        {{#each pageSizeValues key="@index" as |item|}}
-          <option value="{{item}}" selected={{is-equal item selectedValue}}>
-            {{item}}
-          </option>
-        {{/each}}
-      </select>
-    </div>
-  </div>
-
   {{! paginación }}
-  <div class="table-nav col-xs-12 col-sm-7">
+  <div class="table-nav col-xs-12 col-sm-7 col-sm-push-5">
     <div class="btn-toolbar pull-right" role="toolbar">
       <a href="#" {{action "gotoFirst"}} class={{if gotoBackEnabled 'enabled' 'disabled'}}><span
       class="glyphicon glyphicon-chevron-left"></span></a>
@@ -42,6 +24,25 @@
       class="glyphicon glyphicon-chevron-right"></span></a>
     </div>
   </div>
+
+  {{! resumen}}
+  <div class="col-xs-8 col-sm-3 col-sm-pull-7 table-summary">
+    {{summary}}
+  </div>
+
+   {{! tanaño de página}}
+  <div class="col-xs-4 col-sm-2 col-sm-pull-7">
+    <div class="pull-right">
+      <select class="form-control changePageSize" {{action 'changePageSize' on='change'}}>
+        {{#each pageSizeValues key="@index" as |item|}}
+          <option value="{{item}}" selected={{is-equal item selectedValue}}>
+            {{item}}
+          </option>
+        {{/each}}
+      </select>
+    </div>
+  </div>
+
   
   {{! fin paginación }}
 </div>

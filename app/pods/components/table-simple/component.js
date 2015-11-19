@@ -123,6 +123,11 @@ export default Ember.Component.extend({
 				}
 			}
 
+			if ( isNone(get(entry,'className')) ) {
+				setProperties(entry, {
+					className: 'text-center v-middle'
+				});
+			}
 			//establecemos para filtrado por columnas
 			setProperties(entry, {
 				filterString: ''

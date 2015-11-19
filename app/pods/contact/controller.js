@@ -37,7 +37,8 @@ export default Ember.Controller.extend({
 			name:"firstName",
 			title:"First Name",
 			type:"text",
-			mayBeHidden:true
+			mayBeHidden:true,
+			className:'table-simple-cell'
 		},
 		{
 			name:"lastName",

@@ -30,6 +30,12 @@ input{
   width: 6em;
   height: 6em;
 }
+
+.table-simple-cell{
+  vertical-align: middle !important;
+  text-align: center;
+}
+
 @-webkit-keyframes load8 {
   0% {
     -webkit-transform: rotate(0deg);

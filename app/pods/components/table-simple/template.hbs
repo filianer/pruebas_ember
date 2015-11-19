@@ -67,7 +67,7 @@
 						<tr class={{doc.visibility}}>
 							{{#each properties as |prop|}}
 								{{#if prop.isVisible}}
-									<td class="text-center v-middle">
+									<td class="{{prop.className}}">
 										<span>{{get doc prop.name}}</span>
 									</td>
 								{{/if}}

@@ -9,7 +9,8 @@ Llamada:
 		title:		nombre del campo para mostrar en la tabla
 		type:		tipo de dato (quizás no haga falta cuando se quiten los edit text)
 		hidden:		booleano, true si no queremos mostrar el campo y false o no se manda si queremos mostrarlo
-		filter:		booleano, false si no queremos filtrar por ese campo y true o no se manda si queremos filtrar
+		filter:		booleano, false si no queremos filtrar por ese campo y true o no se manda si queremos filtrar,
+		className:  nombre de la clase para las celdas de esa propiedad (Opcional, si no se pintan centradas)
 	}
 ]
 
@@ -110,10 +111,10 @@ ahora mismo todas las columnas visibles usan este filtro, si se desea controlar 
 
 TODOS:
 - Template para cada una de las propiedades
-- className para cada una de las propiedades 
 - saber donde ubicar los styles en los componentes ya que tal y como está no se permiten media queries
 - si añadimos nueva entrada se añade según la ordenación y es posible que no nos demos cuenta de que se ha insertado
 averiguar como solucionar esto, podríamos irnos a la página donde se ha insertado y resaltarlo por ej.
-- Añadir validate para cada propiedad
-- actualizar contenido filtrado si se hace un update o por si llegara un evento que cambiara los datos
+
+- Añadir validate para cada propiedad (Esto quizás se haga a través del servidor)
+- actualizar contenido filtrado si se hace un update o por si llegara un evento que cambiara los datos (Esperar para poder hacer pruebas)
 

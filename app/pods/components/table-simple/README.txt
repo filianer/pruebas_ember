@@ -136,7 +136,6 @@ ahora mismo todas las columnas visibles usan este filtro, si se desea controlar 
 *La edición en linea tal y como está hecha no se comporta bien con el botón de ocultar y mostrar columnas, se puede deshabilitar la edición en línea cuando se habilite este botón
 
 TODOS:
-- Controlar los updates para no guardar campos vacíos ni null
 - Filtrado por columnas poder pasar array de valores por los que queremos que se filtre la columna, por ejemplo si mi columna tiene un template en el que se muestra video, descripción y autor, que podamos decirle al filtro que busque por todas esas propiedades o por la que queramos
 - saber donde ubicar los styles en los componentes ya que tal y como está no se permiten media queries
 - si añadimos nueva entrada se añade según la ordenación y es posible que no nos demos cuenta de que se ha insertado

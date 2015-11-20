@@ -60,3 +60,14 @@ table input{
   border-style: hidden;
 }
 
+.phone_prop{
+  display: none;
+}
+
+.table-summary{
+  line-height: 2em;
+}
+
+.div_phone_filter{
+  display: none;
+}

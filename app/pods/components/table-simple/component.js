@@ -28,6 +28,7 @@ var defaultMessages = {
 	'columns-restoreDefaults': 'Restore Defaults',
 	'button-save':'Save',
 	'button-cancel':'Cancel',
+	'button-filter-phone':'Filters',
 	confirmDelete: 'Are you sure to delete it?',
 	confirmEmptySave: 'Element Empty, are you sure to save it?',
 	tableSummary: 'Show %@ - %@ of %@',
@@ -225,7 +226,6 @@ export default Ember.Component.extend({
 
 	//Función de filtrado
 	filteredContent: computed('filterString', 'datos.[]','properties.@each.filterString', 'flagUpdateFilter', function() {
-		console.log("ENTRA EN FILTRAR CONTENIDO");
 		var filteringIgnoreCase = this.filteringIgnoreCase;
 		var data = this.datos;
 		var properties = this.properties; //propiedades de las columnas

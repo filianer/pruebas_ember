@@ -68,6 +68,7 @@ ahora mismo todas las columnas visibles usan este filtro, si se desea controlar 
 	'noDataToShow': 'No records to show', 			//Texto para mostrar cuando no hay resultados
 	confirmDelete: 'Are you sure to delete it?',	//Texto para confirmar borrado de elementos
 	confirmEmptySave: 'Element Empty, are you sure to save it?', //Texto para confirmar guardado de elemento vacío
+	button-filter-phone: 'Filters',					//Texto del botón para mostrar filtros en el movil
 };
 
 *******************EDITAR*******************

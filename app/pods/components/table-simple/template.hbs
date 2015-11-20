@@ -4,6 +4,28 @@
 	{{/if}}
 
   	<div class="panel-body">
+  		{{!-- filtro que solo se muestra en dispositivos pequeños --}}
+  		{{#if useFilteringByColumns}}
+  			<div class="div_phone_filter">
+				<button class="btn btn-info btn-phone" data-toggle="collapse" data-target="#filter_columns">{{messages.button-filter-phone}} <span class='glyphicon glyphicon-triangle-bottom'></span></button>
+				<div id="filter_columns" class="collapse">
+					{{#each properties as |prop|}}
+						{{#if prop.isVisible}}
+							<div class="text-center v-middle">
+								<div class="phone_prop">
+									{{prop.title}}
+									<span class='glyphicon glyphicon-triangle-top' aria-hidden='true' {{action 'sort' 'asc' prop.name}}></span>
+          							<span class='glyphicon glyphicon-triangle-bottom' aria-hidden='true' {{action 'sort' 'desc' prop.name}}></span>
+								</div>
+								{{input type="text" value=prop.filterString placeholder=messages.searchLabelColumn}}
+							</div>
+						{{/if}}
+					{{/each}}
+				</div>
+			</div>
+  		{{/if}}
+  		{{!-- fin filtro dispositivos pequeños --}}
+
 		<table class="{{if tableStriped 'table-striped'}} {{if tableBordered 'table-bordered'}} {{if tableCondensed 'table-condensed'}} table">
 			<thead>
 				<tr class="color-th">
@@ -30,7 +52,7 @@
 				{{/if}}
 				{{!-- filtrado por columnas --}}
 				{{#if useFilteringByColumns}}
-					<tr class="tr-filter">
+					<tr class="tr-filter display-none-phone">
 						{{#each properties as |prop|}}
 							{{#if prop.isVisible}}
 								<td class="text-center v-middle">
@@ -67,8 +89,9 @@
 						<tr class={{doc.visibility}}>
 							{{#each properties as |prop|}}
 								{{#if prop.isVisible}}
-									<td class="{{prop.className}}">
-										<span>{{get doc prop.name}}</span>
+									<td class="{{prop.className}} padding-phone">
+										<div class="phone_prop">{{prop.title}}</div>
+										<div class="phone_min_height">{{get doc prop.name}}</div>
 									</td>
 								{{/if}}
 							{{/each}}

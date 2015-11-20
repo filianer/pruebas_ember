@@ -1,14 +1,18 @@
 <div class="table-footer clearfix">
+  {{! resumen}}
+  <div class="col-xs-8 col-sm-3 table-summary">
+    {{summary}}
+  </div>
 
   {{! paginación }}
-  <div class="table-nav col-xs-12 col-sm-7 col-sm-push-5">
+  <div class="table-nav col-xs-4 col-sm-7 col-sm-push-2">
     <div class="btn-toolbar pull-right" role="toolbar">
       <a href="#" {{action "gotoFirst"}} class={{if gotoBackEnabled 'enabled' 'disabled'}}><span
       class="glyphicon glyphicon-chevron-left"></span></a>
       <a href="#" {{action "gotoPrev"}} class={{if gotoBackEnabled 'enabled' 'disabled'}}><span
       class="glyphicon glyphicon-menu-left"></span></a>
 
-      <div class="btn-group no-float" role="group">
+      <div class="btn-group no-float display-none-phone" role="group">
         {{#each visiblePageNumbers as |page|}}
           {{#if page.isLink}}
             <button type="button" class="{{if page.isActive 'active'}} btn btn-default" {{action "gotoCustomPage" page.label}}>{{page.label}}</button>
@@ -25,14 +29,9 @@
     </div>
   </div>
 
-  {{! resumen}}
-  <div class="col-xs-8 col-sm-3 col-sm-pull-7 table-summary">
-    {{summary}}
-  </div>
-
    {{! tanaño de página}}
-  <div class="col-xs-4 col-sm-2 col-sm-pull-7">
-    <div class="pull-right">
+  <div class="col-xs-12 col-sm-2 col-sm-pull-7">
+    <div class="pull-left">
       <select class="form-control changePageSize" {{action 'changePageSize' on='change'}}>
         {{#each pageSizeValues key="@index" as |item|}}
           <option value="{{item}}" selected={{is-equal item selectedValue}}>

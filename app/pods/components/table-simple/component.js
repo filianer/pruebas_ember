@@ -89,16 +89,6 @@ export default Ember.Component.extend({
 	//Establece la configuración inicial
 	_setupConfig () {
 		var self = this;
-		//con this.get('modelo') tenemos un RecordArray
-		//RecordArray tiene la propiedad type que nos devuelve un DS.Model con el que podemos sacar las propiedades
-		//var modelo = this.get('modelo').type;
-		
-		// modelo.eachAttribute(function(name, meta) {
-		// 	//según el tipo de dato establecemos type para los input de la tabla
-		// 	var type = (meta.type == 'number') ? 'number':'text';
-		// 	let c = O.create({'title':name, 'type':type});
-		// 	self.processedColumns.addObject(c);
-		// });
 		this.properties = this.get('properties'); //propiedades de las columnas
 		this.datos = this.get('modelo');
 		var existsId = false; //para pintar ordenamiento por defecto
@@ -124,17 +114,19 @@ export default Ember.Component.extend({
 				}
 			}
 
+			//si no nos pasan clase le ponemos una por defecto de centrado
 			if ( isNone(get(entry,'className')) ) {
 				setProperties(entry, {
 					className: 'text-center v-middle'
 				});
 			}
-			//establecemos para filtrado por columnas
+			//establecemos propiedad para filtrado por columnas
 			setProperties(entry, {
 				filterString: ''
 			});
 
 			//añadimos observador en las propiedades por si hay un filtrado y las propiedades se actualian tenemos que actualizar el filtrado
+			//TODO: esto esta por confirmar si hace falta o no, cuando se haga un ejemplo de actualización de datos
 			var propertyName = get(entry,'name');
 			self.addObserver(`datos.@each.${propertyName}`, self, self.updateFilter);
 		});
@@ -190,7 +182,6 @@ export default Ember.Component.extend({
 			}
 		}
 		this.set('sortProps', [orderKey + ':' + order]);
-		
 	},
 
 	//establece los mensajes por defecto o los que nos pasa el usuario
@@ -375,6 +366,7 @@ export default Ember.Component.extend({
 		}));
 	}),
 
+	//Establece la visibilidad de los elementos principales
 	handleVisibility(hidden){
 		if ( hidden ) {
 			set(this,'actionsColumn', false);
@@ -397,6 +389,7 @@ export default Ember.Component.extend({
 		      this.sendAction('actionDel', modelo);
 		    }
 		},
+		
 		new:function(){
 			//creamos nuevo objeto
 			var newObject = {};

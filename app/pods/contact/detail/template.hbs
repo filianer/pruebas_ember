@@ -1,9 +1,11 @@
+{{!-- para edición con modal --}}
 {{!-- {{#table-simple/table-detail model=model actionDel="delete" actionUp="update" title="Edición" transition="transition"}}
 	<div>{{input type="text" value=model.firstName placeholder="first name"}}</div>
 	<div>{{input type="text" value=model.lastName placeholder="last name"}}</div>
 	<div>{{input type="number" value=model.age placeholder="age"}}</div>
 {{/table-simple/table-detail}} --}}
 
+{{!-- para edición en línea --}}
 {{#table-simple/table-detail-inline model=model actionUp="update" transition="transition"}}
 	<td class="text-center">{{input type="text" value=model.firstName placeholder="first name"}}</td>
 	<td class="text-center">{{input type="text" value=model.lastName placeholder="last name"}}</td>

@@ -8,28 +8,56 @@ export default Ember.Controller.extend({
 			title:"ID",
 			type:"text",
 			hidden:true,
+			filterColumn:true,
 			filter:false,
-			mayBeHidden:true
+			mayBeHidden:true,
+			orderColumn:true,
+		},
+		{
+			name:"picture",
+			title:"Picture",
+			type:"text",
+			mayBeHidden:true,
+			template:'components/img-table',
 		},
 		{
 			name:"firstName",
 			title:"First Name",
 			type:"text",
 			mayBeHidden:true,
-			className:'table-simple-cell'
+			filterColumn:true,
+			className:'table-simple-cell',
+			orderColumn:true
 		},
 		{
 			name:"lastName",
 			title:"Last Name",
 			type:"text",
-			mayBeHidden:true
+			filterColumn:true,
+			mayBeHidden:true,
+			orderColumn:true
 		},
 		{
 			name:"age",
 			title:"Age",
 			type:"number",
+			filterColumn:true,
 			filter:false, //para que no filtre por edad (por ejemplo)
-			mayBeHidden:true
+			mayBeHidden:true,
+			orderColumn:true
+		},
+		{
+			name:"video_src",
+			title:"Video",
+			type:"text",
+			mayBeHidden:true,
+			template:'components/video-table'
+		},
+		{
+			name:"video_description",
+			title:"Video Description",
+			type:"text",
+			hidden:true
 		}
 	],
 	pagination:{

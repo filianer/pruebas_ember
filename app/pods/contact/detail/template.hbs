@@ -1,5 +1,6 @@
 {{!-- para edición con modal --}}
 {{!-- {{#table-simple/table-detail model=model actionDel="delete" actionUp="update" title="Edición" transition="transition"}}
+	<div>{{input type="text" value=model.picture placeholder="picture"}}</div>
 	<div>{{input type="text" value=model.firstName placeholder="first name"}}</div>
 	<div>{{input type="text" value=model.lastName placeholder="last name"}}</div>
 	<div>{{input type="number" value=model.age placeholder="age"}}</div>
@@ -7,7 +8,12 @@
 
 {{!-- para edición en línea --}}
 {{#table-simple/table-detail-inline model=model actionUp="update" transition="transition"}}
+	<td class="text-center">{{input type="text" value=model.picture placeholder="picture"}}</td>
 	<td class="text-center">{{input type="text" value=model.firstName placeholder="first name"}}</td>
 	<td class="text-center">{{input type="text" value=model.lastName placeholder="last name"}}</td>
 	<td class="text-center">{{input type="number" value=model.age placeholder="age"}}</td>
+	<td class="text-center">
+		<div>{{input type="text" value=model.video_src placeholder="video"}}</div>
+		<div>{{input type="text" value=model.video_description placeholder="descripción"}}</div>
+	</td>
 {{/table-simple/table-detail-inline}}

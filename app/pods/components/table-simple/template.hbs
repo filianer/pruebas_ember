@@ -12,12 +12,20 @@
 					{{#each properties as |prop|}}
 						{{#if prop.isVisible}}
 							<div class="text-center v-middle">
-								<div class="phone_prop">
-									{{prop.title}}
-									<span class='glyphicon glyphicon-triangle-top' aria-hidden='true' {{action 'sort' 'asc' prop.name}}></span>
-          							<span class='glyphicon glyphicon-triangle-bottom' aria-hidden='true' {{action 'sort' 'desc' prop.name}}></span>
-								</div>
-								{{input type="text" value=prop.filterString placeholder=messages.searchLabelColumn}}
+								{{#if prop.orderColumn}}
+									<div class="phone_prop">
+										{{prop.title}}
+										<span class='glyphicon glyphicon-triangle-top' aria-hidden='true' {{action 'sort' 'asc' prop.name}}></span>
+	          							<span class='glyphicon glyphicon-triangle-bottom' aria-hidden='true' {{action 'sort' 'desc' prop.name}}></span>
+									</div>
+								{{/if}}
+								{{#if prop.filterColumn}}
+									{{#unless prop.orderColumn}}
+										{{prop.title}}
+									{{/unless}}
+									{{input type="text" value=prop.filterString placeholder=messages.searchLabelColumn}}
+									
+								{{/if}}
 							</div>
 						{{/if}}
 					{{/each}}
@@ -33,8 +41,10 @@
 						{{#if prop.isVisible}}
 							<th class="text-center v-middle">
 								{{prop.title}}
-								<span class='glyphicon glyphicon-triangle-top' aria-hidden='true' {{action 'sort' 'asc' prop.name}}></span>
-	          					<span class='glyphicon glyphicon-triangle-bottom' aria-hidden='true' {{action 'sort' 'desc' prop.name}}></span>
+								{{#if prop.orderColumn}}
+									<span class='glyphicon glyphicon-triangle-top' aria-hidden='true' {{action 'sort' 'asc' prop.name}}></span>
+		          					<span class='glyphicon glyphicon-triangle-bottom' aria-hidden='true' {{action 'sort' 'desc' prop.name}}></span>
+	          					{{/if}}
 							</th>
 						{{/if}}
 					{{/each}}
@@ -55,9 +65,13 @@
 					<tr class="tr-filter display-none-phone">
 						{{#each properties as |prop|}}
 							{{#if prop.isVisible}}
-								<td class="text-center v-middle">
-									{{input type="text" value=prop.filterString placeholder=messages.searchLabelColumn}}
-								</td>
+								{{#if prop.filterColumn}}
+									<td class="text-center v-middle">
+										{{input type="text" value=prop.filterString placeholder=messages.searchLabelColumn}}
+									</td>
+								{{else}}
+									<td></td>
+								{{/if}}
 							{{/if}}
 						{{/each}}
 						{{#if actionsColumn}}
@@ -90,15 +104,22 @@
 							{{#each properties as |prop|}}
 								{{#if prop.isVisible}}
 									<td class="{{prop.className}} padding-phone">
-										<div class="phone_prop">{{prop.title}}</div>
-										<div class="phone_min_height">{{get doc prop.name}}</div>
+										<div class="phone_prop">{{prop.title}}</div>{{!-- solo para mostrar en teléfono --}}
+										{{#if (get doc prop.name)}}
+											{{#if prop.template}}
+												{{!--template personalizado para cada columna --}}
+												{{partial prop.template}}
+											{{else}}
+												<div class="phone_min_height">{{get doc prop.name}}</div>
+											{{/if}}
+										{{/if}}
 									</td>
 								{{/if}}
 							{{/each}}
 
 							{{!-- columna de acciones --}}
 							{{#if actionsColumn}}
-								<td class="text-center actions-w">
+								<td class="text-center actions-w v-middle">
 									{{#if route-edit}}
 										{{!-- linkeamos a la ruta del detalle para poder editar --}}
 										{{#link-to route-edit doc.id}}

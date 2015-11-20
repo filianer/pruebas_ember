@@ -19,7 +19,11 @@ module.exports = function(environment) {
       // when it is created
     },
     contentSecurityPolicy: {
-      'connect-src' : "'self' http://a2s.a2system.net:4500"
+      'connect-src' : "'self' http://a2s.a2system.net:4500",
+      'img-src':'*',
+      'media-src':'*',
+      'connect-src':'*',
+      'default-src':'*'
     }
   };
 

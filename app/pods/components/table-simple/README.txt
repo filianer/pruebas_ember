@@ -10,9 +10,34 @@ Llamada:
 		type:		tipo de dato (quizás no haga falta cuando se quiten los edit text)
 		hidden:		booleano, true si no queremos mostrar el campo y false o no se manda si queremos mostrarlo
 		filter:		booleano, false si no queremos filtrar por ese campo y true o no se manda si queremos filtrar,
-		className:  nombre de la clase para las celdas de esa propiedad (Opcional, si no se pintan centradas)
+		className:  nombre de la clase para las celdas de esa propiedad (Opcional, si no se pintan centradas),
+		orderColumn: booleano para mostrar flechas de ordenación en las columnas, true para que se muestren, también habrá que 					pasar el valor useFilteringByColumns:true en el template de la tabla
+		filterColumn: booleano para que aparezca el filtro por columnas, true para que aparezca
+		template: 	url al template customizado (1)
 	}
 ]
+
+****** (1) Manejo de templates ******
+	Ej:
+	properties:[
+	{
+		name:"video_src",
+		title:"Video",
+		type:"text",
+		mayBeHidden:true,
+		template:'components/video-table'
+	}
+	Nos crearemos un componente de nombre video-table
+	En el template podremos acceder a las propiedades del objeto mediante la palabra "doc"
+	Ej template:
+		<div align="center" class="embed-responsive embed-responsive-16by9">
+		    <iframe width="560" height="315" src={{doc.video_src}} frameborder="0" allowfullscreen></iframe>
+		</div>
+		{{#if doc.video_description}}
+			<div>{{doc.video_description}}</div>
+		{{/if}}
+	*Hay que tener presente que también tenemos que adaptar la vista del detalle para poder editarlo
+****** Fin manejo templates *********
 
 - editInline: booleano, true para editar elementos en línea dentro de la table o false o no se pasa para editarlos con modal
 - createInline: booleano, true para crear nuevos elementos en línea dentro de la tabla o false o no se pasa para crearlos fuera 
@@ -111,11 +136,11 @@ ahora mismo todas las columnas visibles usan este filtro, si se desea controlar 
 *La edición en linea tal y como está hecha no se comporta bien con el botón de ocultar y mostrar columnas, se puede deshabilitar la edición en línea cuando se habilite este botón
 
 TODOS:
-- Template para cada una de las propiedades
+- Controlar los updates para no guardar campos vacíos ni null
+- Filtrado por columnas poder pasar array de valores por los que queremos que se filtre la columna, por ejemplo si mi columna tiene un template en el que se muestra video, descripción y autor, que podamos decirle al filtro que busque por todas esas propiedades o por la que queramos
 - saber donde ubicar los styles en los componentes ya que tal y como está no se permiten media queries
 - si añadimos nueva entrada se añade según la ordenación y es posible que no nos demos cuenta de que se ha insertado
 averiguar como solucionar esto, podríamos irnos a la página donde se ha insertado y resaltarlo por ej.
-
 - Añadir validate para cada propiedad (Esto quizás se haga a través del servidor)
 - actualizar contenido filtrado si se hace un update o por si llegara un evento que cambiara los datos (Esperar para poder hacer pruebas)
 

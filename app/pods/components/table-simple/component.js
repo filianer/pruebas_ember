@@ -27,7 +27,6 @@ var defaultMessages = {
 	'columns-showAll': 'Show All',
 	'columns-hideAll': 'Hide All',
 	'columns-restoreDefaults': 'Restore Defaults',
-	'button-filter-phone':'Filters',
 	confirmDelete: 'Are you sure to delete it?',
 	confirmEmptySave: 'Element Empty, are you sure to save it?',
 	tableSummary: 'Show %@ - %@ of %@',

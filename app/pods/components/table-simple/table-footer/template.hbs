@@ -12,7 +12,7 @@
       <a href="#" {{action "gotoPrev"}} class={{if gotoBackEnabled 'enabled' 'disabled'}}><span
       class="glyphicon glyphicon-menu-left"></span></a>
 
-      <div class="btn-group no-float display-none-phone" role="group">
+      <div class="btn-group no-float pag-numbers" role="group">
         {{#each visiblePageNumbers as |page|}}
           {{#if page.isLink}}
             <button type="button" class="{{if page.isActive 'active'}} btn btn-default" {{action "gotoCustomPage" page.label}}>{{page.label}}</button>

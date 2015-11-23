@@ -29,7 +29,7 @@
 				{{/if}}
 				{{!-- filtrado por columnas --}}
 				{{#if useFilteringByColumns}}
-					<tr class="tr-filter display-none-phone">
+					<tr class="tr-filter">
 						{{#each properties as |prop|}}
 							{{#if prop.isVisible}}
 								{{#if prop.filterColumn}}
@@ -70,14 +70,13 @@
 						<tr class={{doc.visibility}}>
 							{{#each properties as |prop|}}
 								{{#if prop.isVisible}}
-									<td class="{{prop.className}} padding-phone">
-										<div class="phone_prop">{{prop.title}}</div>{{!-- solo para mostrar en teléfono --}}
+									<td class="{{prop.className}}">
 										{{#if (get doc prop.name)}}
 											{{#if prop.template}}
 												{{!--template personalizado para cada columna --}}
 												{{partial prop.template}}
 											{{else}}
-												<div class="phone_min_height">{{get doc prop.name}}</div>
+												<div>{{get doc prop.name}}</div>
 											{{/if}}
 										{{/if}}
 									</td>

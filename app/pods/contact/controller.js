@@ -81,7 +81,6 @@ export default Ember.Controller.extend({
 		'noDataToShow': 'No hay resultados',
 		'confirmDelete': '¿Seguro que desas borrar el elemento?',
 		'confirmEmptySave': 'Elemento vacío, ¿seguro que deseas guardarlo?',
-		'button-filter-phone': 'Filtros',
 	}
 	
 });

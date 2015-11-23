@@ -9,7 +9,7 @@ export default DS.RESTSerializer.extend({
 		var root = Ember.String.decamelize(type.modelName);
 		var serData = this.serialize(record, options);
 		$.each(serData, function(key, value){
-			if (value === null || value === ''){
+			if ( Ember.isEmpty(value) ) {
 				delete serData[key];
 			}
 		});

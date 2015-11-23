@@ -36,6 +36,10 @@
   background-color: #DBEDFF !important;
 }
 
+.color-up-elem td{
+  vertical-align: middle;
+}
+
 .color-th{
   background-color: #C7C7C7;
 }

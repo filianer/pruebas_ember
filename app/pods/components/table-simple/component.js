@@ -13,6 +13,7 @@ const {
 	isPresent,
 	compare,
 	setProperties,
+	isEmpty,
 } = Ember;
 
 const O = Ember.Object;
@@ -259,7 +260,7 @@ export default Ember.Component.extend({
 					var cellValue = '' + get(row, propertyName);
 					var filterString = get(c, 'filterString');
 
-					if ('' === filterString) {
+					if ( isEmpty(filterString) ) {
 						return true;
 					}
 						

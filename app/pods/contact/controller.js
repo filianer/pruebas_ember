@@ -76,8 +76,6 @@ export default Ember.Controller.extend({
 		'columns-showAll': 'Mostrar Todo',
 		'columns-hideAll': 'Ocultar Todo',
 		'columns-restoreDefaults': 'Restablecer',
-		'button-save':'Guardar',
-		'button-cancel':'Cancelar',
 		'tableSummary': 'Mostrando %@ - %@ de %@',
 		'allColumnsAreHidden': 'Todas las columnas están ocultas. Usa el botón <strong>Columnas</strong> para mostrar algunas',
 		'noDataToShow': 'No hay resultados',

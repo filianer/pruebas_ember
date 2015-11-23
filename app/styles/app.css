@@ -1,3 +1,6 @@
+@import 'table-simple.css';
+@import 'contact.css';
+
 .mar-left{
 	margin-left: 1em;
 }
@@ -31,20 +34,6 @@ input{
   height: 6em;
 }
 
-.table-simple-cell{
-  vertical-align: middle !important;
-  text-align: center;
-}
-
-.table-img{
-  height: 70px;
-}
-
-.table-video-description{
-  background: #5A5A5A;
-  color: white;
-}
-
 @-webkit-keyframes load8 {
   0% {
     -webkit-transform: rotate(0deg);
@@ -63,85 +52,6 @@ input{
   100% {
     -webkit-transform: rotate(360deg);
     transform: rotate(360deg);
-  }
-}
-
-@media only screen and (max-width: 780px) {
-
-  *[class*="table-simple"] table, thead, tbody, th, td, tr { 
-    display: block; 
-  }
-  
-  /* Ocultamos table headers (no usamos display: none;, por accessibility) */
-  *[class*="table-simple"] thead tr { 
-    position: absolute;
-    top: -9999px;
-    left: -9999px;
-  }
-  
-  *[class*="table-simple"] tr { 
-    border:2px solid dimgray;
-  }
-  
-  *[class*="table-simple"] td { 
-    border: none !important;
-    position: relative;
-  }
-  
-  *[class*="table-simple"] .padding-phone{
-    padding:0 !important;
-  }
-
-  *[class*="table-simple"] .phone_prop{
-    display: block !important;
-    background-color: #C5C5C5;
-    color: white;
-    border-bottom: 1px solid #A5A5A5;
-  }
-  
-  *[class*="table-simple"] .display-none-phone{
-    display: none !important;
-  }
-
-  *[class*="table-simple"] .actions-w{
-    width: 100% !important;
-    background-color: #FFF5EC;
-    text-align: right;
-    padding-right: 1em !important;
-  }
-
-  *[class*="table-simple"] .w-30{
-    width: auto !important;
-  }
-
-  *[class*="table-simple"] .btn-phone{
-    display: block !important;
-    width: 100%;
-  }
-
-  *[class*="table-simple"] #filter_columns input{
-    width: 100%;
-  }
-
-  *[class*="table-simple"] #filter_columns .phone_prop{
-    background-color: #848484;
-    border-bottom: 1px solid #4C4C4C;
-  }
-
-  *[class*="table-simple"] .div_phone_filter{
-    display: block !important;
-    border:3px solid #5BC0DE;
-    border-radius: 7px;
-    margin-bottom: 1em;
-  }
-
-  *[class*="table-simple"] .show_row{
-    display: block !important;
-  }
-
-  .phone_min_height{
-    padding: 0.4em;
-    background-color: white;
   }
 }
 

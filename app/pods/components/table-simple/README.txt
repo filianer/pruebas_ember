@@ -85,8 +85,6 @@ ahora mismo todas las columnas visibles usan este filtro, si se desea controlar 
 	'columns-showAll': 'Show All', 					//Texto para mostrar todas las columnas
 	'columns-hideAll': 'Hide All', 					//Texto para ocultar todas las columnas
 	'columns-restoreDefaults': 'Restore Defaults', 	//Texto para restaurar la visibilidad de las columnas por defecto
-	'button-save':'Save', 							//Texto para el botón de guardado
-	'button-cancel':'Cancel', 						//Texto para el botón de cancelar
 	'tableSummary': 'Show %@ - %@ of %@',			//Texto para el summary en formato para usar  Ember.String.loc
 	'allColumnsAreHidden': 'All columns are hidden. Use <strong>columns</strong>-dropdown to show some of them', 
 													//texto para mostrar cuando no se ve ninguna columna

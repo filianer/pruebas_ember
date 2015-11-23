@@ -1,7 +1,7 @@
 {{yield}}
 <td class="text-center">
   {{#if actionUp}}
-	  <button type ="button" class="btn btn-success" {{action actionUp model}}>{{if msgSave msgSave "Save"}}</button>
+	  <div class="marg-bot-actions"><button type ="button" class="btn btn-xs btn-success" {{action actionUp model}}><span class='glyphicon glyphicon-ok'></span></button></div>
   {{/if}}
-  <button type="button" class="btn btn-warning" data-dismiss="modal" {{action 'reset' model}}>{{if msgCancel msgCancel "Cancel"}}</button>
+  <div><button type="button" class="btn btn-xs btn-warning" data-dismiss="modal" {{action 'reset' model}}><span class='glyphicon glyphicon-remove'></span></button></div>
 </td>

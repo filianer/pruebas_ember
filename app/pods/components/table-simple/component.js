@@ -27,8 +27,6 @@ var defaultMessages = {
 	'columns-showAll': 'Show All',
 	'columns-hideAll': 'Hide All',
 	'columns-restoreDefaults': 'Restore Defaults',
-	'button-save':'Save',
-	'button-cancel':'Cancel',
 	'button-filter-phone':'Filters',
 	confirmDelete: 'Are you sure to delete it?',
 	confirmEmptySave: 'Element Empty, are you sure to save it?',
@@ -38,7 +36,8 @@ var defaultMessages = {
 };
 
 export default Ember.Component.extend({
-
+	//nombre de la clase para div principal del componente
+	classNames:['table-simple'],
 	// Determina si se muestra el filtro de búsqueda
 	showGlobalFilter: true,
 	// Determina si se muestra el footer de la tabla (paginación)
@@ -125,6 +124,13 @@ export default Ember.Component.extend({
 			setProperties(entry, {
 				filterString: ''
 			});
+
+			//clase para mostrar flechas de orden
+			if ( entry.orderColumn ) {
+				setProperties(entry, {
+					sortClass: 'sort_both'
+				});
+			}
 
 			//añadimos observador en las propiedades por si hay un filtrado y las propiedades se actualian tenemos que actualizar el filtrado
 			//TODO: esto esta por confirmar si hace falta o no, cuando se haga un ejemplo de actualización de datos
@@ -433,8 +439,26 @@ export default Ember.Component.extend({
 	    },
 
 	    //ordenación de las filas
-		sort(direction, key) {
-			this.set('sortProps', [key + ':' + direction]);
+		sort(key) {
+			var self = this;
+			//establecemos colores de las flechas de ordenación
+			this.properties.forEach(function(entry){
+				if ( entry.name == key ) {
+					if ( !isNone(entry.sortAsc) ) {
+						setProperties(entry, { sortClass: 'sort_desc'});
+						self.set('sortProps', [key + ':' + 'desc']);
+						setProperties(entry, { sortAsc: null});
+					} else {
+						setProperties(entry, { sortClass: 'sort_asc'});
+						self.set('sortProps', [key + ':' + 'asc']);
+						setProperties(entry, { sortAsc: true});
+					}
+				} else {
+					if ( entry.orderColumn ) {
+						setProperties(entry, { sortClass: 'sort_both'});
+					}
+				}
+			});
 		},
 
 		//ir a la primera página

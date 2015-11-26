@@ -85,15 +85,12 @@ ahora mismo todas las columnas visibles usan este filtro, si se desea controlar 
 	'columns-showAll': 'Show All', 					//Texto para mostrar todas las columnas
 	'columns-hideAll': 'Hide All', 					//Texto para ocultar todas las columnas
 	'columns-restoreDefaults': 'Restore Defaults', 	//Texto para restaurar la visibilidad de las columnas por defecto
-	'button-save':'Save', 							//Texto para el botón de guardado
-	'button-cancel':'Cancel', 						//Texto para el botón de cancelar
 	'tableSummary': 'Show %@ - %@ of %@',			//Texto para el summary en formato para usar  Ember.String.loc
 	'allColumnsAreHidden': 'All columns are hidden. Use <strong>columns</strong>-dropdown to show some of them', 
 													//texto para mostrar cuando no se ve ninguna columna
 	'noDataToShow': 'No records to show', 			//Texto para mostrar cuando no hay resultados
 	confirmDelete: 'Are you sure to delete it?',	//Texto para confirmar borrado de elementos
 	confirmEmptySave: 'Element Empty, are you sure to save it?', //Texto para confirmar guardado de elemento vacío
-	button-filter-phone: 'Filters',					//Texto del botón para mostrar filtros en el movil
 };
 
 *******************EDITAR*******************
@@ -131,13 +128,13 @@ ahora mismo todas las columnas visibles usan este filtro, si se desea controlar 
 	* o bien podemos crearnos nuestro propio template
 ********************************************
 
-*Para que coja los estilos dentro del componente hay que tener instalado: ember install ember-component-css
 
 *La edición en linea tal y como está hecha no se comporta bien con el botón de ocultar y mostrar columnas, se puede deshabilitar la edición en línea cuando se habilite este botón
 
+*Para el diseño responsivo habrá que modificar los @media de table-simple.css
+
 TODOS:
 - Filtrado por columnas poder pasar array de valores por los que queremos que se filtre la columna, por ejemplo si mi columna tiene un template en el que se muestra video, descripción y autor, que podamos decirle al filtro que busque por todas esas propiedades o por la que queramos
-- saber donde ubicar los styles en los componentes ya que tal y como está no se permiten media queries
 - si añadimos nueva entrada se añade según la ordenación y es posible que no nos demos cuenta de que se ha insertado
 averiguar como solucionar esto, podríamos irnos a la página donde se ha insertado y resaltarlo por ej.
 - Añadir validate para cada propiedad (Esto quizás se haga a través del servidor)

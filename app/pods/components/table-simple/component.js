@@ -27,9 +27,6 @@ var defaultMessages = {
 	'columns-showAll': 'Show All',
 	'columns-hideAll': 'Hide All',
 	'columns-restoreDefaults': 'Restore Defaults',
-	'button-save':'Save',
-	'button-cancel':'Cancel',
-	'button-filter-phone':'Filters',
 	confirmDelete: 'Are you sure to delete it?',
 	confirmEmptySave: 'Element Empty, are you sure to save it?',
 	tableSummary: 'Show %@ - %@ of %@',
@@ -38,7 +35,8 @@ var defaultMessages = {
 };
 
 export default Ember.Component.extend({
-
+	//nombre de la clase para div principal del componente
+	classNames:['table-simple'],
 	// Determina si se muestra el filtro de búsqueda
 	showGlobalFilter: true,
 	// Determina si se muestra el footer de la tabla (paginación)
@@ -125,6 +123,13 @@ export default Ember.Component.extend({
 			setProperties(entry, {
 				filterString: ''
 			});
+
+			//clase para mostrar flechas de orden
+			if ( entry.orderColumn ) {
+				setProperties(entry, {
+					sortClass: 'sort_both'
+				});
+			}
 
 			//añadimos observador en las propiedades por si hay un filtrado y las propiedades se actualian tenemos que actualizar el filtrado
 			//TODO: esto esta por confirmar si hace falta o no, cuando se haga un ejemplo de actualización de datos
@@ -331,34 +336,42 @@ export default Ember.Component.extend({
 			pagesCount,
 			currentPageNumber
 		} = getProperties(this, 'pagesCount', 'currentPageNumber');
-		const notLinkLabel = '...';
-		var groups = []; // array of 8 numbers
-		var labels = A([]);
-		groups[0] = 1;
-		groups[1] = Math.min(1, pagesCount);
-		groups[6] = Math.max(1, pagesCount);
-		groups[7] = pagesCount;
-		groups[3] = Math.max(groups[1] + 1, currentPageNumber - 1);
-		groups[4] = Math.min(groups[6] - 1, currentPageNumber + 1);
-		groups[2] = Math.floor((groups[1] + groups[3]) / 2);
-		groups[5] = Math.floor((groups[4] + groups[6]) / 2);
 
-		for (let n = groups[0]; n <= groups[1]; n++) {
-			labels[n] = n;
-		}
-		const userGroup2 = groups[4] >= groups[3] && ((groups[3] - groups[1]) > 1);
-		if (userGroup2) {
-			labels[groups[2]] = notLinkLabel;
-		}
-		for (let i = groups[3]; i <= groups[4]; i++) {
-			labels[i] = i;
-		}
-		const userGroup5 = groups[4] >= groups[3] && ((groups[6] - groups[4]) > 1);
-		if (userGroup5) {
-			labels[groups[5]] = notLinkLabel;
-		}
-		for (let i = groups[6]; i <= groups[7]; i++) {
-			labels[i] = i;
+		var labels = A([]);
+		const notLinkLabel = '...';
+
+		if ( pagesCount <= 7 ) {
+			for (let n = 0; n<pagesCount; n++ ) {
+				labels[n] = n+1;
+			}
+		} else {
+			var groups = []; // array of 8 numbers
+			groups[0] = 1;
+			groups[1] = Math.min(1, pagesCount);
+			groups[6] = Math.max(1, pagesCount);
+			groups[7] = pagesCount;
+			groups[3] = Math.max(groups[1] + 1, currentPageNumber - 1);
+			groups[4] = Math.min(groups[6] - 1, currentPageNumber + 1);
+			groups[2] = Math.floor((groups[1] + groups[3]) / 2);
+			groups[5] = Math.floor((groups[4] + groups[6]) / 2);
+
+			for (let n = groups[0]; n <= groups[1]; n++) {
+				labels[n] = n;
+			}
+			const userGroup2 = groups[4] >= groups[3] && ((groups[3] - groups[1]) > 1);
+			if (userGroup2) {
+				labels[groups[2]] = notLinkLabel;
+			}
+			for (let i = groups[3]; i <= groups[4]; i++) {
+				labels[i] = i;
+			}
+			const userGroup5 = groups[4] >= groups[3] && ((groups[6] - groups[4]) > 1);
+			if (userGroup5) {
+				labels[groups[5]] = notLinkLabel;
+			}
+			for (let i = groups[6]; i <= groups[7]; i++) {
+				labels[i] = i;
+			}
 		}
 		return A(labels.compact().map(label => { return {
 			label: label,
@@ -433,8 +446,26 @@ export default Ember.Component.extend({
 	    },
 
 	    //ordenación de las filas
-		sort(direction, key) {
-			this.set('sortProps', [key + ':' + direction]);
+		sort(key) {
+			var self = this;
+			//establecemos colores de las flechas de ordenación
+			this.properties.forEach(function(entry){
+				if ( entry.name == key ) {
+					if ( !isNone(entry.sortAsc) ) {
+						setProperties(entry, { sortClass: 'sort_desc'});
+						self.set('sortProps', [key + ':' + 'desc']);
+						setProperties(entry, { sortAsc: null});
+					} else {
+						setProperties(entry, { sortClass: 'sort_asc'});
+						self.set('sortProps', [key + ':' + 'asc']);
+						setProperties(entry, { sortAsc: true});
+					}
+				} else {
+					if ( entry.orderColumn ) {
+						setProperties(entry, { sortClass: 'sort_both'});
+					}
+				}
+			});
 		},
 
 		//ir a la primera página

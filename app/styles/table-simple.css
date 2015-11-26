@@ -1,0 +1,135 @@
+.table-simple, .table-simple .height-100{
+  height: 100%;
+}
+
+.table-simple .panel{
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+}
+
+.table-simple .show_row{
+  display: table-row !important;
+}
+
+.table-simple .no-float{
+  float:none !important;
+}
+
+.table-simple .disabled{
+  color: gray;
+  cursor: default;
+}
+
+.table-simple .disabled:hover{
+  color: gray;
+  cursor: default;
+}
+
+.table-simple .v-middle{
+  vertical-align: middle;
+}
+
+.table-simple .color-new-elem{
+  background-color: #FFE7C5 !important;
+}
+
+.table-simple .color-up-elem{
+  background-color: #DBEDFF !important;
+}
+
+.table-simple .color-up-elem td{
+  vertical-align: middle;
+}
+
+.table-simple .color-th{
+  background-color: #C7C7C7;
+}
+
+.table-simple .mleft-low{
+  margin-left: 2em;
+}
+
+.table-simple table input{
+  width: 80%;
+}
+
+.table-simple .tr-filter{
+  background-color: #E8E8E8 !important;
+}
+
+.table-simple .tr-filter input{
+  border-style: hidden;
+}
+
+.table-simple .table-summary{
+  line-height: 2em;
+}
+
+.table-simple .panel-heading{
+  height: 60px;
+}
+
+.table-simple .panel-body{
+  height: 100%;
+  overflow-y: auto;
+  padding:0;
+  padding-bottom: 120px;
+}
+
+.table-simple .panel-footer{
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 60px;
+}
+
+.table-simple .marg-bot-actions{
+  margin-bottom: 3px;
+}
+
+.table-simple .sort_both{
+  background: url('img/sort_both.png') no-repeat center right;
+  cursor: pointer;
+  padding-left: 2em !important;
+  padding-right: 2em !important;
+}
+
+.table-simple .sort_asc{
+  background: url('img/sort_asc.png') no-repeat center right;
+  cursor: pointer;
+}
+
+.table-simple .sort_desc{
+  background: url('img/sort_desc.png') no-repeat center right;
+  cursor: pointer;
+}
+
+.table-simple .table-img{
+  height: 70px;
+}
+
+.table-simple .table-video-description{
+  background: #5A5A5A;
+  color: white;
+}
+
+@media only screen and (max-width: 768px){
+  .table-simple .panel-body{padding-bottom: 190px;}
+
+  .table-simple .panel-footer{height: 85px;}
+
+  .table-simple .panel-heading{height: 105px;}
+  .table-simple .pag-numbers{display: none;}
+  .table-simple table td:nth-child(5),
+  .table-simple table th:nth-child(5) {display: none;}
+}
+@media only screen and (max-width: 640px) {
+  .table-simple table td:nth-child(3),
+  .table-simple table th:nth-child(3){display: none;}
+}
+
+
+
+
+

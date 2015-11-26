@@ -1,0 +1,8 @@
+.table-simple-height{
+  height: 700px;
+}
+
+.table-simple-cell{
+  vertical-align: middle !important;
+  text-align: center;
+}

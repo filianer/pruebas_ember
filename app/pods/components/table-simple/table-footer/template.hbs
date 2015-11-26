@@ -1,18 +1,18 @@
-<div class="table-footer clearfix">
+<div class="panel-footer clearfix">
   {{! resumen}}
-  <div class="col-xs-8 col-sm-3 table-summary">
+  <div class="col-xs-8 col-sm-4 table-summary">
     {{summary}}
   </div>
 
   {{! paginación }}
-  <div class="table-nav col-xs-4 col-sm-7 col-sm-push-2">
+  <div class="table-nav col-xs-4 col-sm-6 col-sm-push-2">
     <div class="btn-toolbar pull-right" role="toolbar">
       <a href="#" {{action "gotoFirst"}} class={{if gotoBackEnabled 'enabled' 'disabled'}}><span
       class="glyphicon glyphicon-chevron-left"></span></a>
       <a href="#" {{action "gotoPrev"}} class={{if gotoBackEnabled 'enabled' 'disabled'}}><span
       class="glyphicon glyphicon-menu-left"></span></a>
 
-      <div class="btn-group no-float display-none-phone" role="group">
+      <div class="btn-group no-float pag-numbers" role="group">
         {{#each visiblePageNumbers as |page|}}
           {{#if page.isLink}}
             <button type="button" class="{{if page.isActive 'active'}} btn btn-default" {{action "gotoCustomPage" page.label}}>{{page.label}}</button>

@@ -4,53 +4,20 @@
 	{{/if}}
 
   	<div class="panel-body">
-  		{{!-- filtro que solo se muestra en dispositivos pequeños --}}
-  		{{#if useFilteringByColumns}}
-  			<div class="div_phone_filter">
-				<button class="btn btn-info btn-phone" data-toggle="collapse" data-target="#filter_columns">{{messages.button-filter-phone}} <span class='glyphicon glyphicon-triangle-bottom'></span></button>
-				<div id="filter_columns" class="collapse">
-					{{#each properties as |prop|}}
-						{{#if prop.isVisible}}
-							<div class="text-center v-middle">
-								{{#if prop.orderColumn}}
-									<div class="phone_prop">
-										{{prop.title}}
-										<span class='glyphicon glyphicon-triangle-top' aria-hidden='true' {{action 'sort' 'asc' prop.name}}></span>
-	          							<span class='glyphicon glyphicon-triangle-bottom' aria-hidden='true' {{action 'sort' 'desc' prop.name}}></span>
-									</div>
-								{{/if}}
-								{{#if prop.filterColumn}}
-									{{#unless prop.orderColumn}}
-										{{prop.title}}
-									{{/unless}}
-									{{input type="text" value=prop.filterString placeholder=messages.searchLabelColumn}}
-									
-								{{/if}}
-							</div>
-						{{/if}}
-					{{/each}}
-				</div>
-			</div>
-  		{{/if}}
-  		{{!-- fin filtro dispositivos pequeños --}}
 
 		<table class="{{if tableStriped 'table-striped'}} {{if tableBordered 'table-bordered'}} {{if tableCondensed 'table-condensed'}} table">
 			<thead>
 				<tr class="color-th">
 					{{#each properties as |prop|}}
 						{{#if prop.isVisible}}
-							<th class="text-center v-middle">
+							<th class="text-center v-middle {{prop.sortClass}}" {{action 'sort' prop.name}}>
 								{{prop.title}}
-								{{#if prop.orderColumn}}
-									<span class='glyphicon glyphicon-triangle-top' aria-hidden='true' {{action 'sort' 'asc' prop.name}}></span>
-		          					<span class='glyphicon glyphicon-triangle-bottom' aria-hidden='true' {{action 'sort' 'desc' prop.name}}></span>
-	          					{{/if}}
 							</th>
 						{{/if}}
 					{{/each}}
 					{{#if actionsColumn}}
-						<th class="text-center v-middle actions-w">
-							Actions
+						<th class="text-center v-middle">
+							<span class='glyphicon glyphicon-wrench'></span>
 						</th>
 					{{/if}}
 				</tr>
@@ -62,7 +29,7 @@
 				{{/if}}
 				{{!-- filtrado por columnas --}}
 				{{#if useFilteringByColumns}}
-					<tr class="tr-filter display-none-phone">
+					<tr class="tr-filter">
 						{{#each properties as |prop|}}
 							{{#if prop.isVisible}}
 								{{#if prop.filterColumn}}
@@ -90,9 +57,9 @@
 									</td>
 								{{/if}}
 							{{/each}}
-							<td class="text-center actions-w">
-								<button type ="button" class="btn  btn-success" {{action 'new'}}>Save</button>
-								<button type ="button" class="btn  btn-warning" {{action 'cancelNew'}}>Cancel</button>
+							<td class="text-center">
+								<div class="marg-bot-actions"><button type ="button" class="btn btn-xs btn-success" {{action 'new'}}><span class='glyphicon glyphicon-ok'></span></button></div>
+								<div><button type ="button" class="btn btn-xs btn-warning" {{action 'cancelNew'}}><span class='glyphicon glyphicon-remove'></span></button></div>
 							</td>
 						</tr>
 					{{/if}}
@@ -103,14 +70,13 @@
 						<tr class={{doc.visibility}}>
 							{{#each properties as |prop|}}
 								{{#if prop.isVisible}}
-									<td class="{{prop.className}} padding-phone">
-										<div class="phone_prop">{{prop.title}}</div>{{!-- solo para mostrar en teléfono --}}
+									<td class="{{prop.className}}">
 										{{#if (get doc prop.name)}}
 											{{#if prop.template}}
 												{{!--template personalizado para cada columna --}}
 												{{partial prop.template}}
 											{{else}}
-												<div class="phone_min_height">{{get doc prop.name}}</div>
+												<div>{{get doc prop.name}}</div>
 											{{/if}}
 										{{/if}}
 									</td>
@@ -119,19 +85,19 @@
 
 							{{!-- columna de acciones --}}
 							{{#if actionsColumn}}
-								<td class="text-center actions-w v-middle">
+								<td class="text-center v-middle">
 									{{#if route-edit}}
 										{{!-- linkeamos a la ruta del detalle para poder editar --}}
 										{{#link-to route-edit doc.id}}
 											{{#if editInline}}
-												<button class="btn  btn-success w-30" {{action 'editInline' doc}}><span class='glyphicon glyphicon-pencil'></span></button>
+												<div class="marg-bot-actions"><button class="btn btn-xs btn-success" {{action 'editInline' doc}}><span class='glyphicon glyphicon-pencil'></span></button></div>
 											{{else}}
-												<button class="btn  btn-success w-30" data-toggle="modal" data-target="#modalDetail"><span class='glyphicon glyphicon-pencil'></span></button>
+												<div class="marg-bot-actions"><button class="btn btn-xs btn-success" data-toggle="modal" data-target="#modalDetail"><span class='glyphicon glyphicon-pencil'></span></button></div>
 											{{/if}}
 										{{/link-to}}
 									{{/if}}
 									{{#if actionDel}}
-										<button class="btn  btn-danger w-30" onClick={{action 'delete' doc}}><span class='glyphicon glyphicon-trash'></span></button>
+										<div><button class="btn btn-xs btn-danger" onClick={{action 'delete' doc}}><span class='glyphicon glyphicon-trash'></span></button></div>
 									{{/if}}
 								</td>
 							{{/if}}
@@ -150,11 +116,12 @@
 				{{/if}}
 			</tbody>
 		</table>
-		{{!-- paginación --}}
-		{{#if showTableFooter}}
-			{{partial 'components/table-simple/table-footer'}}
-		{{/if}}
 	</div>
+
+	{{!-- paginación --}}
+	{{#if showTableFooter}}
+		{{partial 'components/table-simple/table-footer'}}
+	{{/if}}
 </div>
 
 {{!-- outlet para mostrar el modal de edición --}}
